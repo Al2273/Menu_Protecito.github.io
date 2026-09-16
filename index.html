@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Protecito Anticafé</title>
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chewy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffd6e8;
+            --text-dark: #3a2224;
+            --highlight: #f596c5;
+            --price-color: #5c3538;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 40px 15px; /* Más padding arriba y abajo para que no se corten los ajolotes */
+            display: flex;
+            justify-content: center;
+            /* Fondo con patrón más detallado */
+            background-image: 
+                radial-gradient(#f596c5 15%, transparent 16%),
+                radial-gradient(#f596c5 15%, transparent 16%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        .menu-container {
+            background-color: #ffd6e8;
+            max-width: 650px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        /* Borde interior punteado para darle aspecto de tarjeta */
+        .menu-inner-border {
+            border: 3px dashed #f18bbd;
+            border-radius: 15px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.35); /* Efecto cristal ligero */
+            position: relative;
+            z-index: 3;
+        }
+
+        h1 {
+            font-family: 'Chewy', cursive;
+            text-align: center;
+            font-size: 3.5rem;
+            margin: 0;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            color: #4a2c2a;
+            text-shadow: 2px 2px 0px #fff; 
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-top: 5px;
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: #6a4245;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-family: 'Caveat', cursive;
+            text-align: center;
+            font-size: 2.8rem;
+            position: relative;
+            display: inline-block;
+            margin: 25px 0 15px 0;
+            z-index: 1;
+            color: #3a2224;
+            padding: 0 15px;
+        }
+
+        /* Subrayado con estilo de pincelada */
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            right: 0;
+            height: 16px;
+            background-color: var(--highlight);
+            z-index: -1;
+            border-radius: 8px;
+            opacity: 0.9;
+            transform: rotate(-1.5deg);
+        }
+
+        .section-center {
+            text-align: center;
+        }
+
+        /* SISTEMA DE GRILLAS */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 25px;
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end; 
+            font-size: 1.15rem;
+            font-weight: 800;
+            transition: transform 0.2s; 
+        }
+
+        .menu-item:hover {
+            transform: scale(1.02) translateX(3px);
+        }
+
+        .item-name {
+            display: flex;
+            align-items: baseline;
+            white-space: nowrap; 
+        }
+
+        .item-name::before {
+            content: "•";
+            color: #d85c96; 
+            margin-right: 6px;
+            font-size: 1.5rem;
+        }
+
+        .item-dots {
+            flex-grow: 1;
+            border-bottom: 3px dotted #e3a2c2;
+            margin: 0 8px;
+            position: relative;
+            top: -6px; 
+            opacity: 0.7;
+        }
+
+        .item-price {
+            white-space: nowrap;
+            color: var(--price-color);
+        }
+
+        .price-currency {
+            font-size: 0.85em;
+            font-weight: 900;
+        }
+
+        /* SECCIÓN DE REDES SOCIALES */
+        .social-footer {
+            margin-top: 40px;
+            text-align: center;
+            border-top: 2px dashed #f18bbd;
+            padding-top: 25px;
+        }
+
+        .social-footer p {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: #4a2c2a;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap; 
+        }
+
+        .social-icon {
+            text-decoration: none;
+            background-color: var(--highlight);
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(245, 150, 197, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .social-icon:hover {
+            background-color: #f18bbd;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(245, 150, 197, 0.6);
+            color: #fff; 
+        }
+
+        /* 
+        ========================================
+        ESTILOS PARA LOS AJOLOTES (ILUSTRACIONES) 
+        ========================================
+        */
+        .axolotl-img { 
+            position: absolute; 
+            z-index: 10; 
+            pointer-events: none; /* Evita que estorben al tocar la pantalla */
+            /* Efecto de sombra suave para que resalten sobre el fondo */
+            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.15));
+        }
+
+        /* Posiciones exactas basadas en tu diseño de Canva */
+        .axolotl-1 { 
+            top: -45px; 
+            left: -40px; 
+            width: 170px; 
+        } /* El grande de arriba a la izquierda */
+
+        .axolotl-2 { 
+            top: 20px; 
+            right: -25px; 
+            width: 200px; 
+            transform: rotate(15deg); 
+        } /* El chiquito nadando arriba a la derecha */
+
+        .axolotl-3 { 
+            bottom: 40px; 
+            left: -35px; 
+            width: 120px; 
+            transform: rotate(-10deg); 
+        } /* El que sube por la izquierda abajo */
+
+        /* El que está recostado abajo a la derecha */
+
+        /* Formas decorativas (Burbujas/Manchas rosas) */
+        .pink-blob { position: absolute; background-color: var(--highlight); border-radius: 50%; z-index: 1; }
+        .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.8; }
+        .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.8; }
+
+        /* Ajustes ESPECÍFICOS para celulares */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2.2rem; }
+            .menu-grid { gap: 12px 10px; }
+            .menu-item { font-size: 0.9rem; }
+            .menu-inner-border { padding: 20px 10px; }
+            .item-dots { margin: 0 4px; }
+            .social-icon { padding: 8px 15px; font-size: 0.9rem; }
+            .social-footer p { font-size: 1.8rem; }
+            
+            /* Ajuste de ajolotes en pantallas pequeñas para que no tapen el texto */
+            .axolotl-1 { width: 130px; left: -20px; top: -30px; }
+            .axolotl-2 { width: 120px; right: -15px; top: 10px; }
+            .axolotl-3 { width: 90px; left: -20px; bottom: 80px; }
+            
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="menu-container">
+    
+    <!-- ========================================== -->
+    <!-- ILUSTRACIONES DE AJOLOTES                  -->
+    <!-- ========================================== -->
+    <!-- Nota: Las imágenes usarán un texto alternativo si no están los archivos, 
+         asegúrate de tener los archivos ajolote_1.png, ajolote_2.png, etc. en la misma carpeta. -->
+    <img src="ajolote_1.png" class="axolotl-img axolotl-1" alt=" ">
+    <img src="ajolote_2.png" class="axolotl-img axolotl-2" alt=" ">
+    <img src="ajolote_3.png" class="axolotl-img axolotl-3" alt=" ">
+    
+
+
+    <div class="pink-blob blob-1"></div>
+    <div class="pink-blob blob-2"></div>
+    
+    <div class="menu-inner-border">
+        <h1>PROTECITO<br>ANTICAFE</h1>
+        <div class="subtitle">Tu espacio, tu tiempo</div>
+
+        <div class="section-center">
+            <h2>Menú completo</h2>
+        </div>
+        
+        <div class="menu-grid" id="menu-completo"></div>
+
+        <div class="section-center">
+            <h2>Especiales de temporada</h2>
+        </div>
+
+        <div class="menu-grid" id="especiales"></div>
+
+        <!-- SECCIÓN DE REDES SOCIALES -->
+        <div class="social-footer">
+            <p>¡Síguenos en nuestras redes!</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/anticafe_protecito?stkn=MTJkbGdneGs1dDI1eg==" class="social-icon" target="_blank">📷 Instagram</a>
+                <a href="https://www.facebook.com/share/1FF72Qfqp2/" class="social-icon" target="_blank">📘 Facebook</a>
+                <a href="https://www.tiktok.com/@anticafe_protecito?_r=1&_t=ZS-99l2sxTX08y" class="social-icon" target="_blank">🎵 TikTok</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const menuData = {
+        completo: [
+            { nombre: "Jugo", precio: "5" },
+            { nombre: "Refresco", precio: "3.50" },
+            { nombre: "Agua (c/s hielo)", precio: "3" },
+            { nombre: "Latte", precio: "7" },
+            { nombre: "Té helado", precio: "6" },
+            { nombre: "Chocolate", precio: "7" },
+            { nombre: "Café", precio: "5" },
+            { nombre: "Mate", precio: "4" },
+            { nombre: "Té", precio: "4" },
+            { nombre: "Cereal", precio: "6" },
+            { nombre: "Pipocas", precio: "3" },
+            { nombre: "Amanecer Dorado", precio: "5" },
+            { nombre: "Virgen", precio: "6.50" }
+        ],
+        especiales: [
+            { nombre: "Amanecer Dorado", precio: "5" },
+            { nombre: "Virgen", precio: "6.50" }
+        ]
+    };
+
+    function renderMenu(seccionId, items) {
+        const container = document.getElementById(seccionId);
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'menu-item';
+            div.innerHTML = `
+                <span class="item-name">${item.nombre}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">${item.precio} <span class="price-currency">Bs</span></span>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    renderMenu('menu-completo', menuData.completo);
+    renderMenu('especiales', menuData.especiales);
+</script>
+</body>
+</html>
