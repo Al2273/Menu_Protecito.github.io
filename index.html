@@ -8,12 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chewy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* PALETA DE COLORES INSPIRADA EN EL LOGO */
-            --bg-color: #f6ebd8; /* Crema/Beige claro del cuerpo */
-            --text-dark: #3e1f13; /* Marrón chocolate oscuro de las letras */
-            --highlight: #a96f4c; /* Marrón cálido de las branquias */
-            --accent-peach: #ffa89c; /* Durazno del rubor de las mejillas */
-            --price-color: #5c3826; /* Marrón intermedio para los precios */
+            --bg-color: #f6ebd8; 
+            --text-dark: #3e1f13; 
+            --highlight: #a96f4c; 
+            --accent-peach: #ffa89c; 
+            --price-color: #5c3826; 
         }
         
         body {
@@ -24,7 +23,6 @@
             padding: 40px 15px;
             display: flex;
             justify-content: center;
-            /* Puntos de fondo en un marrón muy suave */
             background-image: 
                 radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%),
                 radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%);
@@ -46,7 +44,7 @@
             border: 3px dashed var(--highlight);
             border-radius: 15px;
             padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.4); /* Efecto cristal ligero */
+            background: rgba(255, 255, 255, 0.4); 
             position: relative;
             z-index: 3;
         }
@@ -109,10 +107,20 @@
             margin-bottom: 30px;
         }
 
+        /* 
+         LA SOLUCIÓN: Cambiamos a 1 columna forzada en celulares
+        */
+        @media (max-width: 500px) {
+            .menu-grid {
+                grid-template-columns: 1fr; /* 1 sola columna */
+                gap: 12px; /* Reducimos el espacio entre filas */
+            }
+        }
+
         .menu-item {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end; 
+            align-items: baseline; 
             font-size: 1.15rem;
             font-weight: 800;
             transition: transform 0.2s; 
@@ -125,10 +133,7 @@
         .item-name {
             display: flex;
             align-items: baseline;
-            /* SE CAMBIÓ white-space PARA PERMITIR SALTO DE LÍNEA */
-            white-space: normal; 
-            /* SE AÑADIÓ FLEX PARA MANTENER LA VIÑETA ALINEADA */
-            flex: 1;
+            white-space: nowrap; /* Volvemos a nowrap para que no se parta nunca */
         }
 
         .item-name::before {
@@ -136,33 +141,21 @@
             color: var(--highlight); 
             margin-right: 6px;
             font-size: 1.5rem;
-            /* SE AÑADIÓ ESTO PARA QUE LA VIÑETA NO SE MUEVA SI EL TEXTO BAJA */
-            align-self: flex-start;
-            line-height: 1;
-        }
-
-        /* Envolvemos el texto del nombre en un span para controlar el salto */
-        .name-text {
-            display: inline-block;
-            word-break: break-word; /* Permite romper palabras largas si es necesario */
         }
 
         .item-dots {
             flex-grow: 1;
-            border-bottom: 3px dotted #d4a383; /* Puntos marrones claros */
+            border-bottom: 3px dotted #d4a383; 
             margin: 0 8px;
             position: relative;
             top: -6px; 
             opacity: 0.7;
-            /* Se añadió un ancho mínimo para que no desaparezcan */
             min-width: 15px; 
         }
 
         .item-price {
             white-space: nowrap;
             color: var(--price-color);
-            /* Se aseguró que el precio se alinee abajo */
-            align-self: flex-end;
         }
 
         .price-currency {
@@ -170,7 +163,6 @@
             font-weight: 900;
         }
 
-        /* ESTILOS PARA EL BOTÓN DE JUEGOS CON NUEVOS TONOS */
         .btn-juegos-container {
             text-align: center;
             margin: 40px 0 20px 0;
@@ -209,7 +201,6 @@
             font-size: 2rem;
         }
 
-        /* SECCIÓN DE REDES SOCIALES */
         .social-footer {
             margin-top: 40px;
             text-align: center;
@@ -255,7 +246,6 @@
             box-shadow: 0 6px 15px rgba(169, 111, 76, 0.6);
         }
 
-        /* ESTILOS PARA LOS AJOLOTES */
         .axolotl-img { 
             position: absolute; 
             z-index: 10; 
@@ -267,7 +257,6 @@
         .axolotl-2 { top: 20px; right: -25px; width: 200px; transform: rotate(15deg); } 
         .axolotl-3 { bottom: 40px; left: -35px; width: 120px; transform: rotate(-10deg); } 
 
-        /* Formas decorativas (Burbujas durazno) */
         .color-blob { position: absolute; background-color: var(--accent-peach); border-radius: 50%; z-index: 1; }
         .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.7; }
         .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.7; }
@@ -275,9 +264,9 @@
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
             h2 { font-size: 2.2rem; }
-            /* Se redujo un poco el gap para dar más espacio horizontal en celular */
-            .menu-grid { gap: 12px 15px; }
-            .menu-item { font-size: 0.9rem; }
+            
+            /* Ajustes menores para celular */
+            .menu-item { font-size: 1rem; }
             .menu-inner-border { padding: 20px 10px; }
             .item-dots { margin: 0 4px; }
             .social-icon { padding: 8px 15px; font-size: 0.9rem; }
@@ -364,9 +353,10 @@
         items.forEach(item => {
             const div = document.createElement('div');
             div.className = 'menu-item';
-            // SE MODIFICÓ LA INYECCIÓN HTML PARA EVITAR EL DESBORDE DE TEXTO LARGO
+            
+            // Volvemos a la estructura original, mucho más limpia
             div.innerHTML = `
-                <span class="item-name"><span class="name-text">${item.nombre}</span></span>
+                <span class="item-name">${item.nombre}</span>
                 <span class="item-dots"></span>
                 <span class="item-price">${item.precio} <span class="price-currency">Bs</span></span>
             `;
