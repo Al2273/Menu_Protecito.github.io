@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Juego - Protecito Anticafé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chewy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f6ebd8; 
+            --text-dark: #3e1f13; 
+            --highlight: #a96f4c; 
+            --accent-peach: #ffa89c; 
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 40px 15px;
+            display: flex;
+            justify-content: center;
+            background-image: 
+                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%),
+                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        .menu-container {
+            background-color: var(--bg-color);
+            max-width: 800px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 15px 40px rgba(62, 31, 19, 0.15), inset 0 0 20px rgba(255,255,255,0.6);
+            position: relative;
+        }
+
+        .menu-inner-border {
+            border: 3px dashed var(--highlight);
+            border-radius: 15px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.6); 
+            position: relative;
+            z-index: 3;
+            min-height: 50vh;
+        }
+
+        /* BOTÓN VOLVER */
+        .btn-volver-container { margin-bottom: 20px; }
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #fff;
+            color: #8b5133;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 3px solid #8b5133;
+            box-shadow: 0 4px 0 #8b5133;
+            transition: all 0.1s ease;
+        }
+        .btn-volver:hover { transform: translateY(2px); box-shadow: 0 2px 0 #8b5133; }
+        .btn-volver:active { transform: translateY(4px); box-shadow: 0 0 0 #8b5133; }
+
+        /* CONTENIDO DEL JUEGO */
+        .game-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .game-main-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(62, 31, 19, 0.15);
+            background-color: #f2ddc9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .game-title-section h1 {
+            font-family: 'Chewy', cursive;
+            font-size: 3.5rem;
+            margin: 0 0 15px 0;
+            line-height: 1.1;
+            text-shadow: 2px 2px 0px #fff; 
+            text-align: left;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-badge {
+            background-color: var(--highlight);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(169, 111, 76, 0.3);
+        }
+
+        .game-description {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #5c3826;
+            font-weight: 700;
+        }
+
+        /* SECCIÓN CÓMO JUGAR */
+        .how-to-play {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #f6ebd8;
+            margin-top: 20px;
+        }
+
+        .how-to-play h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            margin: 0 0 15px 0;
+            text-align: left;
+        }
+
+        .how-to-play ul {
+            padding-left: 20px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #3e1f13;
+            font-weight: 600;
+        }
+
+        .how-to-play li {
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .game-header { flex-direction: column; text-align: center; gap: 15px; }
+            .game-title-section h1 { text-align: center; font-size: 2.8rem; }
+            .game-stats { justify-content: center; flex-wrap: wrap; }
+            .how-to-play h2 { text-align: center; }
+            .game-main-img { width: 200px; height: 200px; }
+        }
+
+        /* Imágenes decorativas */
+        .axolotl-img { position: absolute; z-index: 10; pointer-events: none; filter: drop-shadow(0px 10px 10px rgba(62, 31, 19, 0.15)); }
+        .axolotl-1 { top: -45px; right: -30px; width: 140px; transform: scaleX(-1); } 
+    </style>
+</head>
+<body>
+
+<div class="menu-container">
+    <img src="ajolote_2.png" class="axolotl-img axolotl-1" alt=" ">
+    
+    <div class="menu-inner-border">
+        
+        <div class="btn-volver-container">
+            <a href="juegos.html" class="btn-volver">◀ Volver a Ludoteca</a>
+        </div>
+
+        <!-- AQUÍ SE INYECTA EL CONTENIDO DINÁMICO -->
+        <div id="game-content">
+            <!-- Loading... -->
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // =========================================================
+    // BASE DE DATOS DETALLADA DE LOS JUEGOS
+    // =========================================================
+   const juegosDetalle = {
+        "Uno Clásico": {
+            imagen: "uno.png",
+            jugadores: "2-10",
+            tiempo: "15 min",
+            descripcion: "El clásico y mundialmente famoso juego de cartas de colores y números. ¡Ideal para destruir amistades de forma divertida!",
+            instrucciones: [
+                "Se reparten 7 cartas a cada jugador.",
+                "En tu turno, debes jugar una carta que coincida en color, número o símbolo con la carta que está boca arriba en el pozo.",
+                "Si no tienes una carta válida, debes robar una del mazo. Si la puedes jugar, hazlo; si no, pasa tu turno.",
+                "Usa cartas de acción (Reversa, Salto, +2, +4) para complicarle la vida a los demás.",
+                "¡OBLIGATORIO! Cuando te quede una sola carta, debes gritar '¡UNO!'. Si alguien se da cuenta de que no lo hiciste antes de que el siguiente jugador actúe, debes robar 2 cartas.",
+                "El primer jugador en quedarse sin cartas gana."
+            ]
+        },
+        "Uno No Mercy": {
+            imagen: "unonomercy.png",
+            jugadores: "2-6",
+            tiempo: "15 min",
+            descripcion: "La versión más despiadada y cruel de UNO. Con cartas de +6, +10 y reglas que te eliminarán sin piedad.",
+            instrucciones: [
+                "Se juega casi igual al UNO Clásico, pero con mucha más maldad.",
+                "Cartas acumulables: Puedes responder a un +2 con otro +2, a un +4 con un +4, ¡hasta que alguien se lleve todo el montón!",
+                "Cartas nuevas brutales: Incluye cartas de robar 6, robar 10, y descartar toda tu mano para intercambiarla con otro jugador.",
+                "Regla de Eliminación: ¡Si en algún momento llegas a tener 25 cartas o más en tu mano, quedas automáticamente eliminado del juego!",
+                "El último jugador en pie (o el primero en quedarse sin cartas) gana."
+            ]
+        },
+        "Uno Gigante": {
+            imagen: "unogigante.png",
+            jugadores: "2-10",
+            tiempo: "15 min",
+            descripcion: "Todo lo que amas del UNO Clásico, pero en un formato gigante e hilarante.",
+            instrucciones: [
+                "Las reglas son exactamente las mismas que en el UNO Clásico.",
+                "El único desafío adicional es cómo sostener tantas cartas gigantes con tus manos sin que los demás vean tus colores.",
+                "Ideal para fotos divertidas y momentos incómodos al barajar."
+            ]
+        },
+        "Jenga": {
+            imagen: "jenga.png",
+            jugadores: "1-8",
+            tiempo: "10 min",
+            descripcion: "Un juego de tensión, pulso firme y equilibrio. Extrae los bloques sin derrumbar la torre.",
+            instrucciones: [
+                "Arma la torre apilando los bloques en pisos de 3, alternando la dirección de cada piso.",
+                "En tu turno, debes retirar un bloque de cualquier parte de la torre (excepto del nivel superior completo) usando una sola mano.",
+                "Coloca el bloque que retiraste en la cima de la torre para construir un nuevo piso.",
+                "El turno termina cuando el siguiente jugador toca un bloque o pasan 10 segundos.",
+                "Pierde el jugador que haga caer la torre. ¡Gana el último que movió un bloque con éxito!"
+            ]
+        },
+        "Monopoly": {
+            imagen: "monopoly.png",
+            jugadores: "2-6",
+            tiempo: "90 min",
+            descripcion: "El juego definitivo de negocios, propiedades y capitales. ¡Conviértete en el dueño de la ciudad y deja a tus amigos en bancarrota!",
+            instrucciones: [
+                "Cada jugador elige una ficha y recibe un capital inicial del banco.",
+                "En tu turno, lanza los dados y avanza por el tablero.",
+                "Si caes en una propiedad sin dueño, puedes comprarla. Si decides no hacerlo, el banco la subasta.",
+                "Si caes en la propiedad de otro jugador, debes pagarle alquiler. (¡El alquiler sube si construyen casas u hoteles!).",
+                "Saca cartas de Suerte y Arca Comunal, cobra cada vez que pases por GO, y evita caer en la Cárcel.",
+                "El último jugador que quede sin declararse en bancarrota es el ganador."
+            ]
+        },
+        "Paceñopolis": {
+            imagen: "paceño.png",
+            jugadores: "2-6",
+            tiempo: "90 min",
+            descripcion: "¡La versión local de Monopoly! Compra terrenos y calles emblemáticas de la ciudad de La Paz.",
+            instrucciones: [
+                "Las mecánicas de juego son idénticas a las de Monopoly.",
+                "La diversión radica en comprar y vender lugares que conoces de la vida real.",
+                "Lanza los dados, compra calles, construye tus negocios y cobra alquiler a tus amigos cuando caigan en tu zona.",
+                "Evita las casillas de multas locales y administra bien tus bolivianos para no quebrar."
+            ]
+        },
+        "Ludo": {
+            imagen: "ludo.png",
+            jugadores: "2-4",
+            tiempo: "30-60 min",
+            descripcion: "Un clásico juego de mesa de carreras. Ideal para una tarde tranquila... hasta que alguien te come la ficha.",
+            instrucciones: [
+                "Cada jugador tiene 4 fichas en su 'casa'. El objetivo es dar la vuelta completa al tablero y llevar las 4 fichas al centro.",
+                "Para sacar una ficha de tu casa, necesitas sacar un 6 en el dado.",
+                "Si sacas un 6, puedes sacar una ficha nueva o avanzar una que ya está en juego, ¡y tienes un turno extra!",
+                "Si caes exactamente en la casilla donde está la ficha de un oponente, te lo 'comes' y su ficha regresa a su casa.",
+                "Las casillas con estrellas son zonas seguras donde no te pueden comer.",
+                "El primero en llevar sus 4 fichas a la meta gana."
+            ]
+        },
+        "Catan": {
+            imagen: "catan.png",
+            jugadores: "3-4",
+            tiempo: "60 min",
+            descripcion: "El juego de estrategia y negociación por excelencia. Coloniza una isla construyendo poblados y caminos.",
+            instrucciones: [
+                "El tablero se arma al azar con hexágonos que producen recursos: madera, arcilla, ovejas, trigo y mineral.",
+                "En cada turno, se lanzan dos dados. Todos los jugadores que tengan un poblado tocando el hexágono con ese número reciben el recurso.",
+                "Usa tus recursos para construir caminos, nuevos poblados, ciudades o comprar cartas de desarrollo.",
+                "Negocia e intercambia recursos con otros jugadores en tu turno.",
+                "Si sale un 7 en los dados, ¡nadie produce, el Ladrón se mueve para bloquear un hexágono y se roba una carta!",
+                "Gana el primero en conseguir 10 puntos de victoria (los poblados valen 1, las ciudades 2)."
+            ]
+        },
+        "Cartas de Póker": {
+            imagen: "cartas.png",
+            jugadores: "2-5+",
+            tiempo: "Variable",
+            descripcion: "El mazo clásico de 52 cartas. Infinitas posibilidades, desde un simple Loba hasta un intenso Texas Hold'em.",
+            instrucciones: [
+                "Las reglas dependen del juego que elijan jugar (Loba, Carioca, Póker, Blackjack, Presidente, etc.).",
+                "Si no saben qué jugar, 'Presidente' es una gran opción: Se reparten todas las cartas. El objetivo es quedarse sin cartas lo antes posible.",
+                "El primero que tira una carta define si se juegan individuales, pares, tercias, etc. El siguiente debe tirar cartas del mismo tipo pero de mayor valor.",
+                "El 2 es la carta más alta. Si nadie puede superar el valor, el último en tirar comienza una nueva ronda.",
+                "El que se queda sin cartas primero es el Presidente, el último es el Vagabundo."
+            ]
+        },
+        "Ajedrez": {
+            imagen: "chess.png",
+            jugadores: "2",
+            tiempo: "30+ min",
+            descripcion: "El rey de los juegos de estrategia. Mide tu intelecto y planeación en una batalla de 64 casillas.",
+            instrucciones: [
+                "Las piezas blancas siempre mueven primero.",
+                "Cada pieza tiene un movimiento específico: Peones (hacia adelante), Torres (líneas rectas), Alfiles (diagonales), Caballos (en forma de 'L'), Reina (todas las direcciones) y Rey (un paso a cualquier lado).",
+                "El objetivo es acorralar al Rey del oponente de manera que no pueda escapar de ser capturado (Jaque Mate).",
+                "Recuerda las reglas especiales: El enroque (movimiento doble de Rey y Torre) y la promoción del peón si llega al otro extremo del tablero."
+            ]
+        },
+        "Basta": {
+            imagen: "basta.png",
+            jugadores: "2+",
+            tiempo: "15-30 min",
+            descripcion: "El clásico juego de palabras rápido, también conocido como Tutti Frutti. Demuestra tu vocabulario bajo presión.",
+            instrucciones: [
+                "Se elige una letra del abecedario al azar.",
+                "Todos los jugadores deben escribir en su hoja una palabra que comience con esa letra para diferentes categorías (Nombre, Animal, País, Color, Fruta, etc.).",
+                "El primer jugador en completar todas las categorías grita '¡BASTA 1, BASTA 2... hasta 10!'.",
+                "Todos deben dejar de escribir.",
+                "Se suman los puntos: 100 puntos por palabra única, 50 puntos si alguien más escribió la misma palabra, 0 si está vacía o incorrecta.",
+                "El jugador con más puntos tras varias rondas gana."
+            ]
+        },
+        "Polilla Tramposa": {
+            imagen: "polilla.png",
+            jugadores: "3-5",
+            tiempo: "15 min",
+            descripcion: "El único juego donde hacer trampa no solo está permitido... ¡es obligatorio para ganar!",
+            instrucciones: [
+                "El objetivo es quedarte sin cartas. Puedes descartar cartas de forma normal jugándolas en la mesa si su número es 1 mayor o 1 menor a la carta en juego.",
+                "Hay un jugador que es el 'Chinche Guardián'.",
+                "Excepto el Guardián, todos pueden (y deben) hacer trampa para deshacerse de sus cartas: tíralas al suelo, escóndelas en tu manga, o déjalas caer, ¡pero sin que el Guardián te vea!",
+                "Si el Guardián te atrapa, no puedes descartar esa carta, el Guardián te da una suya y tú te conviertes en el nuevo Guardián.",
+                "Atención a las cartas de insectos especiales que tienen acciones rápidas (aplastar mosquitos, robar cartas, etc.)."
+            ]
+        },
+        "Virus": {
+            imagen: "virus.png",
+            jugadores: "2-6",
+            tiempo: "20 min",
+            descripcion: "Un juego de cartas rápido y contagioso. Protege tus órganos mientras infectas los de tus amigos.",
+            instrucciones: [
+                "Se reparten 3 cartas a cada jugador. En tu turno debes jugar una carta y robar otra para terminar siempre con 3.",
+                "El objetivo es ser el primero en tener un cuerpo con 4 órganos sanos de distinto color.",
+                "Juega órganos en tu área para construir tu cuerpo.",
+                "Juega cartas de Virus sobre los órganos de tus amigos para infectarlos. (Dos virus destruyen un órgano).",
+                "Usa Medicinas para curar tus órganos. (Dos medicinas inmunizan un órgano permanentemente).",
+                "Usa cartas de Tratamiento para robar órganos, intercambiar cuerpos o sembrar el caos."
+            ]
+        },
+        "Virus 2": {
+            imagen: "virus2.png",
+            jugadores: "2-6",
+            tiempo: "20 min",
+            descripcion: "La expansión que lleva la infección a otro nivel. Los virus han mutado y ahora son mucho más peligrosos.",
+            instrucciones: [
+                "Se juega combinando las cartas con el mazo del juego original 'Virus'.",
+                "Nuevos Virus Mutados: Estos virus de colores combinados pueden infectar múltiples tipos de órganos o resistir curas convencionales.",
+                "Medicinas Experimentales: Son más fuertes y pueden erradicar los virus mutados.",
+                "El nuevo Órgano Biónico es súper resistente y añade nuevas formas de proteger tu cuerpo.",
+                "El objetivo sigue siendo el mismo: ser el primero en aislar 4 órganos sanos."
+            ]
+        },
+        "Agua de Calzón": {
+            imagen: "aguadecal.png",
+            jugadores: "3+",
+            tiempo: "30-60 min",
+            descripcion: "Juego de fiesta picante y divertido para romper el hielo. Perfecto para reír sin parar.",
+            instrucciones: [
+                "Se coloca el mazo de cartas en el centro de la mesa.",
+                "Por turnos, cada jugador saca una carta y lee en voz alta la instrucción.",
+                "Las cartas contienen retos vergonzosos, preguntas incómodas, reglas para el grupo o mini-juegos.",
+                "Debes cumplir lo que dice la carta. Si te niegas o fallas el reto, debes pagar un castigo (ideal para grupos que piden castigos divertidos).",
+                "Sigan sacando cartas hasta que ya no puedan aguantar la risa."
+            ]
+        },
+        "Amigos de Mierda": {
+            imagen: "amigosdem.png",
+            jugadores: "3+",
+            tiempo: "20 min",
+            descripcion: "Descubre lo que tus amigos realmente piensan de ti. No apto para grupos sensibles.",
+            instrucciones: [
+                "En cada ronda, un jugador saca una carta y la lee en voz alta. Ejemplo: 'Si hubiera un apocalipsis zombie, ¿a quién empujaríamos para salvarnos?'.",
+                "A la cuenta de tres, ¡todos los jugadores deben señalar al mismo tiempo a la persona del grupo que creen que encaja mejor con la descripción de la carta!",
+                "La persona que reciba más votos se queda con la carta.",
+                "El primer jugador en recibir 5 cartas es coronado oficialmente como un 'Amigo de Mierda' y el juego termina."
+            ]
+        },
+        "Amigos de Mierda 2": {
+            imagen: "amigosdem2.png",
+            jugadores: "3+",
+            tiempo: "20 min",
+            descripcion: "Más preguntas, más acusaciones y menos dignidad. Una secuela que no perdona a nadie.",
+            instrucciones: [
+                "Puedes jugarlo solo o mezclarlo con el Amigos de Mierda original.",
+                "La dinámica es la misma: Un jugador lee la premisa, todos cuentan hasta 3 y apuntan a un amigo.",
+                "El que tiene más dedos apuntándole gana la carta de la ronda.",
+                "Si hay un empate, la persona que leyó la carta decide el desempate.",
+                "Lleguen a 5 cartas para nombrar al ganador."
+            ]
+        },
+        "Decisiones de Mierda": {
+            imagen: "decisiones.png",
+            jugadores: "5+",
+            tiempo: "20-40 min",
+            descripcion: "Debates morales absurdos. Tienes dos opciones horribles, ¿cuál eliges y cómo defiendes tu postura?",
+            instrucciones: [
+                "Un jugador actúa como el 'Juez' en cada ronda.",
+                "Los jugadores roban cartas de dilemas, que siempre presentan escenarios donde ambas opciones son terribles o ridículas.",
+                "Cada jugador debe elegir una opción y argumentar al Juez por qué es la 'mejor' opción dentro de lo malo.",
+                "El Juez decide quién dio el argumento más divertido o convincente.",
+                "El ganador de la ronda se lleva un punto, y el rol del Juez pasa al siguiente jugador."
+            ]
+        },
+        "Sí señor oscuro": {
+            imagen: "siseñor.png",
+            jugadores: "4-8",
+            tiempo: "20 min",
+            descripcion: "Un juego de rol y excusas. Eres un sirviente inútil tratando de no ser castigado por el Señor Oscuro.",
+            instrucciones: [
+                "Un jugador asume el papel del Señor Oscuro (el jefe). Los demás son sus Goblins sirvientes.",
+                "El Señor Oscuro pregunta por qué falló la última misión malvada.",
+                "Los Goblins deben usar las 'Cartas de Excusa' de su mano para inventar una historia ridícula de por qué fallaron.",
+                "¡Puedes usar cartas de 'Pasar el muerto' para echarle la culpa a otro Goblin en medio de la historia!",
+                "Si te quedas sin cartas, titubeas o tu historia no convence al Señor Oscuro, recibes una carta de 'Mirada Fulminante'.",
+                "Si acumulas 3 Miradas Fulminantes, quedas eliminado."
+            ]
+        },
+        "Happy Salmon": {
+            imagen: "happysalmon.png",
+            jugadores: "3-8",
+            tiempo: "5 min",
+            descripcion: "Caótico, rápido, ruidoso y de pie. Un juego para cansarse y reír a carcajadas.",
+            instrucciones: [
+                "No hay turnos. Todos juegan al mismo tiempo.",
+                "Cada jugador recibe un pequeño mazo de cartas con 4 acciones: Chocar los 5, Toque de Puños, Cambiar de Lugar, y Salmón Feliz.",
+                "Da vuelta tu primera carta y grita la acción que te tocó repetidamente hacia el centro de la mesa.",
+                "Cuando encuentres a otro jugador gritando la misma acción, ¡hagan la acción juntos! y descarten la carta.",
+                "El primero en descartar todas las cartas de su mazo debe gritar '¡SALMÓN FELIZ!' y gana el juego."
+            ]
+        },
+        "Taco Gato Cabra Queso Pizza": {
+            imagen: "taco.png",
+            jugadores: "2-8",
+            tiempo: "10 min",
+            descripcion: "Un juego de agilidad visual y física. Memoria muscular llevada al límite.",
+            instrucciones: [
+                "Se reparten todas las cartas boca abajo. Sin verlas, cada jugador en su turno pone una carta en el centro.",
+                "Al mismo tiempo que pones la carta, debes decir una palabra en este orden: 'Taco', 'Gato', 'Cabra', 'Queso', 'Pizza'. (Si eres el 1ro dices Taco, el 2do Gato, etc.).",
+                "Si la palabra que dijiste COINCIDE con la imagen de la carta que acabas de lanzar, ¡todos deben poner su mano sobre el montón!",
+                "El último en poner la mano se lleva todas las cartas del centro.",
+                "Cuidado con las cartas especiales (Gorila, Marmota, Narval) que requieren hacer una acción física antes de golpear la mesa.",
+                "Gana el primero en quedarse sin cartas."
+            ]
+        },
+        "Who Am I?": {
+            imagen: "who.png",
+            jugadores: "2+",
+            tiempo: "15 min",
+            descripcion: "¿Qué o quién soy? Un juego de deducción donde todos saben lo que eres, menos tú.",
+            instrucciones: [
+                "Cada jugador se coloca una banda en la cabeza y sin ver, se inserta una carta con un personaje, objeto o animal en ella.",
+                "En tu turno, debes hacer preguntas al resto del grupo para intentar adivinar quién eres.",
+                "El grupo solo puede responder con 'Sí' o 'No'.",
+                "Tienes un tiempo límite (usualmente un reloj de arena) para hacer tantas preguntas como puedas.",
+                "Gana quien adivine su personaje usando la menor cantidad de turnos."
+            ]
+        },
+        "Penguin Trap": {
+            imagen: "penguin.png",
+            jugadores: "2-4",
+            tiempo: "5-10 min",
+            descripcion: "Un juego de destreza súper rápido y emocionante. ¡No dejes que el pingüino caiga al agua helada!",
+            instrucciones: [
+                "Arma la plataforma de hielo encajando los hexágonos y coloca al pingüino en el centro.",
+                "Por turnos, haz girar la ruleta para ver de qué color es el bloque de hielo que debes romper (azul, blanco, cualquiera o pasar turno).",
+                "Usa el pequeño martillo para golpear y sacar el bloque indicado con mucho cuidado.",
+                "El jugador que golpee un bloque y haga caer al pingüino pierde el juego."
+            ]
+        },
+        "60 Segundos": {
+            imagen: "60s.png",
+            jugadores: "2+",
+            tiempo: "30 min",
+            descripcion: "Adrenalina y agilidad mental. Haz que tu equipo adivine palabras antes de que el tiempo se acabe.",
+            instrucciones: [
+                "Divídanse en equipos.",
+                "Un jugador toma una tarjeta con una palabra. Tiene exactamente 60 segundos para que su equipo la adivine.",
+                "Puedes dar pistas hablando, actuando o dibujando (dependiendo de la variante acordada), pero no puedes decir partes de la palabra escrita.",
+                "Por cada palabra adivinada, el equipo gana un punto y rápidamente saca la siguiente tarjeta hasta que acabe el tiempo.",
+                "El equipo con más puntos al final gana."
+            ]
+        },
+        "Ojos de halcon": {
+            imagen: "halcon.png",
+            jugadores: "2-6",
+            tiempo: "15 min",
+            descripcion: "Rapidez y concentración. El clásico juego tipo Dobble/Spot It donde tus ojos te pueden engañar.",
+            instrucciones: [
+                "Se reparte una carta a cada jugador boca abajo y se pone el mazo restante boca arriba en el centro.",
+                "A la cuenta de tres, todos voltean su carta.",
+                "Mágicamente, CADA carta en el juego siempre comparte exactamente un símbolo en común con cualquier otra carta.",
+                "El primero en encontrar y gritar el nombre del símbolo que se repite entre su carta y la carta del centro, toma la carta del centro.",
+                "Esa carta se vuelve la tuya y ahora buscas con la nueva del centro.",
+                "Quien tenga más cartas al vaciarse el mazo central gana."
+            ]
+        },
+        "CASHFLOW": {
+            imagen: "cashflow.png",
+            jugadores: "2-6",
+            tiempo: "60-180 min",
+            descripcion: "Educación financiera hecha juego. Diseñado por Robert Kiyosaki para enseñarte a salir de la 'Carrera de la Rata'.",
+            instrucciones: [
+                "Cada jugador elige una profesión que dictará su salario y gastos iniciales (registrados en una hoja de balance personal).",
+                "La primera fase se juega en el círculo interior (Carrera de la Rata), donde trabajas de 9 a 5, cobras salario y tienes gastos.",
+                "En tu turno, lanzas los dados y puedes caer en oportunidades de mercado (para comprar acciones o bienes raíces) o en gastos inesperados.",
+                "El objetivo es comprar suficientes activos para que tus Ingresos Pasivos superen tus Gastos Totales.",
+                "Cuando lo logras, pasas a la pista exterior (La Vía Rápida) y el primero en alcanzar su 'Gran Sueño' gana."
+            ]
+        },
+        "Clue": {
+            imagen: "clue.png",
+            jugadores: "2-6",
+            tiempo: "45 min",
+            descripcion: "El clásico juego de misterio. Hubo un asesinato en la mansión, descubre al culpable, el arma y la habitación.",
+            instrucciones: [
+                "Al inicio, se esconde al azar una carta de Sospechoso, una de Arma y una de Habitación en un sobre secreto. Ese es el misterio a resolver.",
+                "Las demás cartas se reparten entre los jugadores. Ve tachando en tu libreta las que tú tienes, ¡esas no pueden estar en el sobre!",
+                "Muévete por las habitaciones del tablero. Al entrar a una, lanza una hipótesis (ej: 'Fue Mostaza, con el tubo de plomo, en la biblioteca').",
+                "El jugador a tu izquierda debe mostrarte EN SECRETO una de las cartas que mencionaste si la tiene. Así vas descartando opciones.",
+                "Si estás seguro, haz una acusación final. Revisa el sobre. Si aciertas, ganas; si fallas, quedas fuera."
+            ]
+        },
+        "Pictionary": {
+            imagen: "pictionary.png",
+            jugadores: "3+",
+            tiempo: "30-60 min",
+            descripcion: "Demuestra tus nulas habilidades artísticas. El clásico juego de dibujar contra reloj.",
+            instrucciones: [
+                "Se juega en equipos. En cada turno, un jugador de un equipo será el dibujante.",
+                "Saca una carta con una palabra y pon el reloj de arena en marcha.",
+                "Dibuja pistas para que tu equipo adivine la palabra. ¡Prohibido hablar, hacer mímica, o escribir números y letras!",
+                "Si el equipo adivina antes de que termine el tiempo, avanzan en el tablero.",
+                "El primer equipo en llegar a la meta final y superar el último desafío gana."
+            ]
+        },
+        "Juego del Calamar": {
+            imagen: "calamar.png",
+            jugadores: "3-6",
+            tiempo: "45 min",
+            descripcion: "Supervivencia, traición y alianzas temporales basado en la exitosa serie. Trata de sobrevivir a los 6 juegos.",
+            instrucciones: [
+                "Cada jugador controla un equipo de varios participantes.",
+                "Avanzarán jugando versiones de mesa de los juegos de la serie: Luz roja Luz verde, Dalgona (la galleta), El juego de la cuerda, etc.",
+                "Cada mini-juego requiere estrategias diferentes de apuestas, colocación de fichas o faroleo.",
+                "Los miembros de tu equipo irán muriendo si fallas, y sus alcancías se sumarán al premio final.",
+                "El jugador que logre tener al último participante vivo se lleva todo el premio."
+            ]
+        },
+        "Cranium": {
+            imagen: "cranium.png",
+            jugadores: "4+",
+            tiempo: "45 min",
+            descripcion: "El juego de mesa para usar todo el cerebro. Actúa, tararea, dibuja y moldea plastilina para ganar.",
+            instrucciones: [
+                "Se juega en equipos. En tu turno, tu equipo lanza el dado y avanza en el tablero hacia una casilla de color.",
+                "El color determina la categoría del desafío: Gato Creativo (dibujar/esculpir), Dato Estelar (preguntas), Lombriz Letrada (palabras), Star Performer (actuar/tararear).",
+                "Si completan el desafío antes de que caiga el reloj de arena, pueden lanzar los dados en su próximo turno.",
+                "Para ganar, el equipo debe llegar a la casilla central de Cranium y superar un último reto elegido por los oponentes."
+            ]
+        },
+        "Scrabble": {
+            imagen: "scrabble.png",
+            jugadores: "2-4",
+            tiempo: "45 min",
+            descripcion: "El clásico juego de crear palabras cruzadas. Consigue los mejores puntajes utilizando las letras más difíciles.",
+            instrucciones: [
+                "Cada jugador saca 7 fichas de letras al azar.",
+                "En tu turno, forma una palabra en el tablero conectándola a las palabras que ya existen (como un crucigrama).",
+                "Suma los puntos de cada letra utilizada.",
+                "Multiplica tu puntuación si logras colocar fichas en las casillas especiales (Doble Letra, Triple Palabra, etc.).",
+                "Roba nuevas fichas para tener siempre 7. El juego acaba cuando no quedan más fichas. Gana quien sume más puntos."
+            ]
+        },
+        "Rummikub": {
+            imagen: "rummikub.png",
+            jugadores: "2-4",
+            tiempo: "30 min",
+            descripcion: "Dinámico juego de números, similar al rummy pero con fichas en lugar de cartas.",
+            instrucciones: [
+                "Cada jugador recibe 14 fichas en su atril oculto.",
+                "El objetivo es bajar todas tus fichas a la mesa creando grupos.",
+                "Grupos válidos: Series (ej: 3, 4, 5 del mismo color) o Tríos/Cuartetos (ej: 8 rojo, 8 negro, 8 azul).",
+                "En tu turno puedes bajar fichas nuevas o manipular los grupos que ya están en la mesa para hacer encajar tus fichas.",
+                "Para tu primera jugada, debes bajar fichas que sumen al menos 30 puntos.",
+                "El que baje todas sus fichas primero debe gritar '¡Rummikub!' y gana la partida."
+            ]
+        },
+        "Hedbanz": {
+            imagen: "hedbanz.png",
+            jugadores: "2-6",
+            tiempo: "15 min",
+            descripcion: "El divertido juego rápido de preguntas de '¿Qué soy?'. Perfecto para risas inmediatas.",
+            instrucciones: [
+                "Colócate la vincha en la cabeza. Saca una carta sin verla y ponla en tu vincha para que los demás la vean.",
+                "Voltea el reloj de arena en tu turno y comienza a hacer preguntas cerradas (que se respondan con 'Sí' o 'No') a los demás.",
+                "Ejemplo: '¿Soy un animal?', '¿Hago ruido?', '¿Soy comida?'.",
+                "Si adivinas la carta antes de que acabe el tiempo, puedes sacar otra.",
+                "Gana el primero en adivinar 3 cartas correctamente."
+            ]
+        },
+        "Wall Game": {
+            imagen: "wall.png",
+            jugadores: "2-4",
+            tiempo: "5-15 min",
+            descripcion: "Un juego de pulso de estilo Humpty Dumpty. Empuja los ladrillos sin tirar la pared.",
+            instrucciones: [
+                "Arma la pared encajando todos los ladrillos y coloca la figura (el personaje) arriba del muro.",
+                "En tu turno, debes usar la pequeña espátula para empujar un ladrillo y sacarlo de la pared.",
+                "Debes tener mucho cuidado para no debilitar demasiado la estructura.",
+                "El jugador que, al empujar un ladrillo, haga que la figura caiga de la pared es el perdedor."
+            ]
+        },
+        "Falling Monkeys": {
+            imagen: "monkeys.png",
+            jugadores: "2-4",
+            tiempo: "10-15 min",
+            descripcion: "Clásico juego familiar (Tumblin' Monkeys). Tira los dados, saca los palitos y evita que los monos caigan.",
+            instrucciones: [
+                "Arma el árbol cruzando los palitos de colores por los agujeros y lanza todos los monos por la parte superior.",
+                "En tu turno, lanza el dado de colores.",
+                "Saca un palito que coincida con el color que mostró el dado, siempre empezando por los niveles más altos del árbol.",
+                "Si caen monos mientras sacas el palito, guárdalos en tu montón.",
+                "El juego termina cuando caen todos los monos. ¡El jugador con menos monos en su poder gana!"
+            ]
+        },
+        "Bingo": {
+            imagen: "bingo.png",
+            jugadores: "2+",
+            tiempo: "30 min",
+            descripcion: "El clásico de la suerte y atención. Cruza los dedos para que canten tus números.",
+            instrucciones: [
+                "Cada jugador recibe un cartón con números generados al azar.",
+                "El 'cantante' saca bolillos de la tómbola y anuncia el número en voz alta.",
+                "Si tienes ese número en tu cartón, lo marcas con una ficha.",
+                "Dependiendo del acuerdo inicial, puedes ganar marcando una línea horizontal, cuatro esquinas o llenando todo el cartón.",
+                "El primero en completar el patrón debe gritar ¡BINGO! para llevarse la victoria."
+            ]
+        },
+        "Que Waso": {
+            imagen: "waso.png",
+            jugadores: "3+",
+            tiempo: "45 min",
+            descripcion: "Juego de fiesta local sin censura, ideal para pasar un buen rato entre amigos de confianza.",
+            instrucciones: [
+                "Se sientan en círculo y mezclan las cartas.",
+                "Saca una carta en tu turno. Cada carta trae un reto desvergonzado, preguntas íntimas o juegos de grupo.",
+                "Puedes elegir entre cumplir lo que manda la carta, o si no te animas, beber/cumplir un castigo impuesto por el grupo.",
+                "El objetivo es pasarla bien y descubrir los secretos mejor guardados de tus amigos."
+            ]
+        },
+        "Aguarda": {
+            imagen: "aguarda.png",
+            jugadores: "3+",
+            tiempo: "30 min",
+            descripcion: "Juego de cartas pensado para animar la previa y poner castigos creativos.",
+            instrucciones: [
+                "El mazo está lleno de instrucciones directas y locas.",
+                "Saca una carta y lee la dinámica. Algunas cartas son para ti (responde algo), otras implican a dos jugadores (duelos) y otras afectan a todo el grupo (el último en hacer 'X' pierde).",
+                "Si pierdes o te niegas a hacer el reto de la carta, tendrás que asumir el castigo del grupo (como un trago de alguna bebida misteriosa que preparen en la mesa).",
+                "Un juego para soltarse y reír."
+            ]
+        },
+        "Amazing Roulette": {
+            imagen: "roulette.png",
+            jugadores: "2-6",
+            tiempo: "15 min",
+            descripcion: "La ruleta de la suerte (o mala suerte) en formato de retos rápidos para grupo.",
+            instrucciones: [
+                "Coloca la ruleta en el centro y llénala de castigos divertidos (por ejemplo, vasos de agua, limón, chiles pequeños, etc., o simplemente prendas verbales).",
+                "Por turnos, haz girar la ruleta.",
+                "Allí donde se detenga la flecha, el jugador deberá asumir la consecuencia designada para ese color o número.",
+                "Si la ruleta tiene bolita, funciona como el casino, cae el número y quien lo eligió se salva (o se sacrifica)."
+            ]
+        },
+        "Gongi": {
+            imagen: "gongi.png",
+            jugadores: "2+",
+            tiempo: "10 min",
+            descripcion: "Tensión máxima, reflejos y un timbre. Presta mucha atención para golpear antes que los demás.",
+            instrucciones: [
+                "Se coloca el timbre (Gong) en el centro de la mesa al alcance de todos y se reparten las cartas.",
+                "Cada jugador revela rápidamente una carta frente a él en cada turno.",
+                "Las cartas tienen diferentes imágenes o figuras.",
+                "Si ves que, sumando todas las cartas boca arriba en la mesa, hay una combinación específica (por ejemplo, exactamente 5 figuras iguales), debes ser el primero en tocar el timbre.",
+                "El que toque primero y tenga razón, se lleva las cartas de la mesa. El que toque y se equivoque, pierde cartas.",
+                "El jugador que se quede con todo el mazo gana."
+            ]
+        },
+        "Rompecabezas Naruto (200pcs)": {
+            imagen: "naruto.png",
+            jugadores: "2+",
+            tiempo: "15+ min",
+            descripcion: "Demuestra tu camino ninja armando a tus personajes favoritos de la Aldea de la Hoja.",
+            instrucciones: [
+                "Voltea todas las piezas para que el lado de la imagen quede hacia arriba.",
+                "Tip pro: Empieza buscando las piezas que tienen un borde liso para armar el marco de la imagen primero.",
+                "Agrupa el resto de las piezas por colores (ej: piezas naranjas para Naruto, azul oscuro para Sasuke).",
+                "¡Trabajen en equipo para completarlo lo antes posible!"
+            ]
+        },
+        "Rompecabezas Demon Slayer (200pcs)": {
+            imagen: "demon.png",
+            jugadores: "2+",
+            tiempo: "15+ min",
+            descripcion: "Arma esta escena épica de Tanjiro, Nezuko y los Pilares con mucha paciencia y respiración de concentración total.",
+            instrucciones: [
+                "Despeja un buen espacio en la mesa.",
+                "Separa todas las piezas de los bordes para crear el marco exterior.",
+                "Usa la caja como referencia para ir conectando los colores del haori de los personajes.",
+                "Concéntrate para encontrar las piezas que completan las texturas del fondo."
+            ]
+        },
+        "Rompecabezas Record of Ragnarok (200pcs)": {
+            imagen: "record.png",
+            jugadores: "2+",
+            tiempo: "15+ min",
+            descripcion: "Dioses contra la humanidad. Relájate mientras armas a los luchadores de este torneo definitivo.",
+            instrucciones: [
+                "Busca las 4 esquinas primero, y luego las piezas de los bordes rectos.",
+                "Los personajes tienen diseños muy detallados y colores oscuros, por lo que te sugerimos trabajar por zonas de color.",
+                "Ayuda a tu compañero pasándole piezas que parezcan encajar en su área."
+            ]
+        },
+        "Rompecabezas Animales (100pcs)": {
+            imagen: "animales.png",
+            jugadores: "2+",
+            tiempo: "15+ min",
+            descripcion: "Un rompecabezas sencillo, hermoso y relajante para desconectar un rato la mente.",
+            instrucciones: [
+                "Ideal para armar mientras toman un buen café.",
+                "Separen las piezas de bordes y ármenlas primero.",
+                "Al ser de 100 piezas, pueden dividirse las áreas: uno arma el cielo, otro el suelo, y luego se juntan en el centro.",
+                "¡Disfruten del paisaje completo cuando terminen!"
+            ]
+        }
+    };
+
+    // 1. Obtener el nombre del juego desde la URL (ej: detalle.html?juego=Uno%20Clásico)
+    const urlParams = new URLSearchParams(window.location.search);
+    const nombreJuego = urlParams.get('juego');
+
+    const contentDiv = document.getElementById('game-content');
+
+    // 2. Buscar si el juego existe en nuestra base de datos
+    if (nombreJuego && juegosDetalle[nombreJuego]) {
+        const juego = juegosDetalle[nombreJuego];
+        
+        // 3. Crear la lista de instrucciones en HTML (<ul><li>...</li></ul>)
+        let instruccionesHTML = '';
+        juego.instrucciones.forEach(paso => {
+            instruccionesHTML += `<li>${paso}</li>`;
+        });
+
+        // 4. Inyectar el diseño en la página
+        contentDiv.innerHTML = `
+            <div class="game-header">
+                <img src="${juego.imagen}" alt="${nombreJuego}" class="game-main-img" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'game-main-img\\'>🎲</div>'">
+                <div class="game-title-section">
+                    <h1>${nombreJuego}</h1>
+                    <div class="game-stats">
+                        <span class="stat-badge">👥 ${juego.jugadores} Jugadores</span>
+                        <span class="stat-badge">⏱️ ${juego.tiempo}</span>
+                    </div>
+                    <p class="game-description">${juego.descripcion}</p>
+                </div>
+            </div>
+
+            <div class="how-to-play">
+                <h2>¿Cómo se juega?</h2>
+                <ul>
+                    ${instruccionesHTML}
+                </ul>
+            </div>
+        `;
+    } else {
+        // 5. Mensaje de error si el usuario entra a la página sin seleccionar un juego válido
+        contentDiv.innerHTML = `
+            <div class="error-message">
+                <p>Ups... No encontramos los detalles de este juego 🎲</p>
+                <a href="juegos.html" class="btn-volver" style="margin-top:20px;">Explorar Ludoteca</a>
+            </div>
+        `;
+    }
+</script>
+</body>
+</html>
