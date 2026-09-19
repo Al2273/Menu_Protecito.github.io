@@ -8,10 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chewy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #ffd6e8;
-            --text-dark: #3a2224;
-            --highlight: #f596c5;
-            --price-color: #5c3538;
+            /* PALETA DE COLORES INSPIRADA EN EL LOGO */
+            --bg-color: #f6ebd8; /* Crema/Beige claro del cuerpo */
+            --text-dark: #3e1f13; /* Marrón chocolate oscuro de las letras */
+            --highlight: #a96f4c; /* Marrón cálido de las branquias */
+            --accent-peach: #ffa89c; /* Durazno del rubor de las mejillas */
+            --price-color: #5c3826; /* Marrón intermedio para los precios */
         }
         
         body {
@@ -19,33 +21,32 @@
             color: var(--text-dark);
             font-family: 'Nunito', sans-serif;
             margin: 0;
-            padding: 40px 15px; /* Más padding arriba y abajo para que no se corten los ajolotes */
+            padding: 40px 15px;
             display: flex;
             justify-content: center;
-            /* Fondo con patrón más detallado */
+            /* Puntos de fondo en un marrón muy suave */
             background-image: 
-                radial-gradient(#f596c5 15%, transparent 16%),
-                radial-gradient(#f596c5 15%, transparent 16%);
+                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%),
+                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
         }
 
         .menu-container {
-            background-color: #ffd6e8;
+            background-color: var(--bg-color);
             max-width: 650px;
             width: 100%;
             border-radius: 20px;
             padding: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.5);
+            box-shadow: 0 15px 40px rgba(62, 31, 19, 0.15), inset 0 0 20px rgba(255,255,255,0.6);
             position: relative;
         }
 
-        /* Borde interior punteado para darle aspecto de tarjeta */
         .menu-inner-border {
-            border: 3px dashed #f18bbd;
+            border: 3px dashed var(--highlight);
             border-radius: 15px;
             padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.35); /* Efecto cristal ligero */
+            background: rgba(255, 255, 255, 0.4); /* Efecto cristal ligero */
             position: relative;
             z-index: 3;
         }
@@ -57,7 +58,7 @@
             margin: 0;
             line-height: 1.1;
             letter-spacing: 2px;
-            color: #4a2c2a;
+            color: var(--text-dark);
             text-shadow: 2px 2px 0px #fff; 
         }
 
@@ -67,7 +68,7 @@
             margin-top: 5px;
             margin-bottom: 30px;
             font-weight: 800;
-            color: #6a4245;
+            color: #5c3826;
             letter-spacing: 1px;
         }
 
@@ -79,11 +80,10 @@
             display: inline-block;
             margin: 25px 0 15px 0;
             z-index: 1;
-            color: #3a2224;
+            color: var(--text-dark);
             padding: 0 15px;
         }
 
-        /* Subrayado con estilo de pincelada */
         h2::after {
             content: "";
             position: absolute;
@@ -94,7 +94,7 @@
             background-color: var(--highlight);
             z-index: -1;
             border-radius: 8px;
-            opacity: 0.9;
+            opacity: 0.7;
             transform: rotate(-1.5deg);
         }
 
@@ -102,7 +102,6 @@
             text-align: center;
         }
 
-        /* SISTEMA DE GRILLAS */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -131,14 +130,14 @@
 
         .item-name::before {
             content: "•";
-            color: #d85c96; 
+            color: var(--highlight); 
             margin-right: 6px;
             font-size: 1.5rem;
         }
 
         .item-dots {
             flex-grow: 1;
-            border-bottom: 3px dotted #e3a2c2;
+            border-bottom: 3px dotted #d4a383; /* Puntos marrones claros */
             margin: 0 8px;
             position: relative;
             top: -6px; 
@@ -155,18 +154,57 @@
             font-weight: 900;
         }
 
+        /* ESTILOS PARA EL BOTÓN DE JUEGOS CON NUEVOS TONOS */
+        .btn-juegos-container {
+            text-align: center;
+            margin: 40px 0 20px 0;
+        }
+
+        .btn-juegos {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #8b5133;
+            color: white;
+            text-decoration: none;
+            font-family: 'Chewy', cursive;
+            font-size: 1.8rem;
+            padding: 12px 30px;
+            border-radius: 30px;
+            box-shadow: 0 6px 0 #5c3826, 0 10px 15px rgba(62, 31, 19, 0.2);
+            transition: all 0.1s ease;
+            position: relative;
+            z-index: 5;
+        }
+
+        .btn-juegos:hover {
+            background-color: var(--highlight);
+            transform: translateY(2px);
+            box-shadow: 0 4px 0 #5c3826, 0 8px 10px rgba(62, 31, 19, 0.2);
+        }
+
+        .btn-juegos:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 #5c3826, 0 2px 5px rgba(62, 31, 19, 0.2);
+        }
+
+        .btn-icon {
+            font-size: 2rem;
+        }
+
         /* SECCIÓN DE REDES SOCIALES */
         .social-footer {
             margin-top: 40px;
             text-align: center;
-            border-top: 2px dashed #f18bbd;
+            border-top: 2px dashed var(--highlight);
             padding-top: 25px;
         }
 
         .social-footer p {
             font-family: 'Caveat', cursive;
             font-size: 2rem;
-            color: #4a2c2a;
+            color: var(--text-dark);
             margin-top: 0;
             margin-bottom: 15px;
         }
@@ -181,13 +219,13 @@
         .social-icon {
             text-decoration: none;
             background-color: var(--highlight);
-            color: var(--text-dark);
+            color: #fff;
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: 800;
             font-size: 1.05rem;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(245, 150, 197, 0.4);
+            box-shadow: 0 4px 10px rgba(169, 111, 76, 0.4);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -196,54 +234,28 @@
         }
 
         .social-icon:hover {
-            background-color: #f18bbd;
+            background-color: #8b5133;
             transform: translateY(-4px);
-            box-shadow: 0 6px 15px rgba(245, 150, 197, 0.6);
-            color: #fff; 
+            box-shadow: 0 6px 15px rgba(169, 111, 76, 0.6);
         }
 
-        /* 
-        ========================================
-        ESTILOS PARA LOS AJOLOTES (ILUSTRACIONES) 
-        ========================================
-        */
+        /* ESTILOS PARA LOS AJOLOTES */
         .axolotl-img { 
             position: absolute; 
             z-index: 10; 
-            pointer-events: none; /* Evita que estorben al tocar la pantalla */
-            /* Efecto de sombra suave para que resalten sobre el fondo */
-            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.15));
+            pointer-events: none;
+            filter: drop-shadow(0px 10px 10px rgba(62, 31, 19, 0.15));
         }
 
-        /* Posiciones exactas basadas en tu diseño de Canva */
-        .axolotl-1 { 
-            top: -45px; 
-            left: -40px; 
-            width: 170px; 
-        } /* El grande de arriba a la izquierda */
+        .axolotl-1 { top: -45px; left: -40px; width: 170px; } 
+        .axolotl-2 { top: 20px; right: -25px; width: 200px; transform: rotate(15deg); } 
+        .axolotl-3 { bottom: 40px; left: -35px; width: 120px; transform: rotate(-10deg); } 
 
-        .axolotl-2 { 
-            top: 20px; 
-            right: -25px; 
-            width: 200px; 
-            transform: rotate(15deg); 
-        } /* El chiquito nadando arriba a la derecha */
+        /* Formas decorativas (Burbujas durazno) */
+        .color-blob { position: absolute; background-color: var(--accent-peach); border-radius: 50%; z-index: 1; }
+        .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.7; }
+        .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.7; }
 
-        .axolotl-3 { 
-            bottom: 40px; 
-            left: -35px; 
-            width: 120px; 
-            transform: rotate(-10deg); 
-        } /* El que sube por la izquierda abajo */
-
-        /* El que está recostado abajo a la derecha */
-
-        /* Formas decorativas (Burbujas/Manchas rosas) */
-        .pink-blob { position: absolute; background-color: var(--highlight); border-radius: 50%; z-index: 1; }
-        .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.8; }
-        .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.8; }
-
-        /* Ajustes ESPECÍFICOS para celulares */
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
             h2 { font-size: 2.2rem; }
@@ -253,12 +265,11 @@
             .item-dots { margin: 0 4px; }
             .social-icon { padding: 8px 15px; font-size: 0.9rem; }
             .social-footer p { font-size: 1.8rem; }
+            .btn-juegos { font-size: 1.5rem; padding: 10px 25px; }
             
-            /* Ajuste de ajolotes en pantallas pequeñas para que no tapen el texto */
             .axolotl-1 { width: 130px; left: -20px; top: -30px; }
             .axolotl-2 { width: 120px; right: -15px; top: 10px; }
             .axolotl-3 { width: 90px; left: -20px; bottom: 80px; }
-            
         }
 
     </style>
@@ -267,19 +278,12 @@
 
 <div class="menu-container">
     
-    <!-- ========================================== -->
-    <!-- ILUSTRACIONES DE AJOLOTES                  -->
-    <!-- ========================================== -->
-    <!-- Nota: Las imágenes usarán un texto alternativo si no están los archivos, 
-         asegúrate de tener los archivos ajolote_1.png, ajolote_2.png, etc. en la misma carpeta. -->
     <img src="ajolote_1.png" class="axolotl-img axolotl-1" alt=" ">
     <img src="ajolote_2.png" class="axolotl-img axolotl-2" alt=" ">
     <img src="ajolote_3.png" class="axolotl-img axolotl-3" alt=" ">
-    
 
-
-    <div class="pink-blob blob-1"></div>
-    <div class="pink-blob blob-2"></div>
+    <div class="color-blob blob-1"></div>
+    <div class="color-blob blob-2"></div>
     
     <div class="menu-inner-border">
         <h1>PROTECITO<br>ANTICAFE</h1>
@@ -297,7 +301,13 @@
 
         <div class="menu-grid" id="especiales"></div>
 
-        <!-- SECCIÓN DE REDES SOCIALES -->
+        <!-- BOTÓN MENÚ DE JUEGOS -->
+        <div class="btn-juegos-container">
+            <a href="juegos.html" class="btn-juegos">
+                <span class="btn-icon">🎲</span> Ver Menú de Juegos
+            </a>
+        </div>
+
         <div class="social-footer">
             <p>¡Síguenos en nuestras redes!</p>
             <div class="social-links">
@@ -312,9 +322,8 @@
 <script>
     const menuData = {
         completo: [
-            { nombre: "Jugo", precio: "5" },
-            { nombre: "Refresco", precio: "3.50" },
-            { nombre: "Agua (c/s hielo)", precio: "3" },
+            { nombre: "Soda", precio: "3.50" },
+            { nombre: "Agua (c/s hielo)", precio: "0" },
             { nombre: "Latte", precio: "7" },
             { nombre: "Té helado", precio: "6" },
             { nombre: "Chocolate", precio: "7" },
@@ -323,12 +332,11 @@
             { nombre: "Té", precio: "4" },
             { nombre: "Cereal", precio: "6" },
             { nombre: "Pipocas", precio: "3" },
-            { nombre: "Amanecer Dorado", precio: "5" },
-            { nombre: "Virgen", precio: "6.50" }
+            { nombre: "Ramen", precio: "13" },
         ],
         especiales: [
-            { nombre: "Amanecer Dorado", precio: "5" },
-            { nombre: "Virgen", precio: "6.50" }
+            { nombre: "Amanecer Dorado 2.0", precio: "5" },
+            { nombre: "Soda Virgen", precio: "6.50" }
         ]
     };
 
@@ -351,3 +359,5 @@
 </script>
 </body>
 </html>
+
+
