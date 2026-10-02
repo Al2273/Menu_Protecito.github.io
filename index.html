@@ -107,13 +107,10 @@
             margin-bottom: 30px;
         }
 
-        /* 
-         LA SOLUCIÓN: Cambiamos a 1 columna forzada en celulares
-        */
         @media (max-width: 500px) {
             .menu-grid {
-                grid-template-columns: 1fr; /* 1 sola columna */
-                gap: 12px; /* Reducimos el espacio entre filas */
+                grid-template-columns: 1fr; 
+                gap: 12px; 
             }
         }
 
@@ -133,7 +130,7 @@
         .item-name {
             display: flex;
             align-items: baseline;
-            white-space: nowrap; /* Volvemos a nowrap para que no se parta nunca */
+            white-space: nowrap; 
         }
 
         .item-name::before {
@@ -265,7 +262,6 @@
             h1 { font-size: 2.5rem; }
             h2 { font-size: 2.2rem; }
             
-            /* Ajustes menores para celular */
             .menu-item { font-size: 1rem; }
             .menu-inner-border { padding: 20px 10px; }
             .item-dots { margin: 0 4px; }
@@ -282,6 +278,10 @@
 </head>
 <body>
 
+<a href="#" id="btnTop" class="btn-top" title="Volver arriba" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 99; width: 50px; height: 50px; font-size: 1.5rem; border: none; outline: none; background-color: #8b5133; color: white; cursor: pointer; border-radius: 50%; box-shadow: 0 4px 10px rgba(62, 31, 19, 0.3); transition: background-color 0.3s, transform 0.2s; align-items: center; justify-content: center; text-decoration: none;">
+    ⇮
+</a>
+
 <div class="menu-container">
     
     <img src="ajolote_1.png" class="axolotl-img axolotl-1" alt=" ">
@@ -295,16 +295,28 @@
         <h1>PROTECITO<br>ANTICAFE</h1>
         <div class="subtitle">Tu espacio, tu tiempo</div>
 
+        <!-- Bebidas Calientes -->
         <div class="section-center">
-            <h2>Menú completo</h2>
+            <h2>Bebidas Calientes</h2>
         </div>
-        
-        <div class="menu-grid" id="menu-completo"></div>
+        <div class="menu-grid" id="bebidas-calientes"></div>
 
+        <!-- Bebidas Frías -->
+        <div class="section-center">
+            <h2>Bebidas Frías</h2>
+        </div>
+        <div class="menu-grid" id="bebidas-frias"></div>
+
+        <!-- Snacks -->
+        <div class="section-center">
+            <h2>Snacks & Comida</h2>
+        </div>
+        <div class="menu-grid" id="snacks"></div>
+
+        <!-- Especiales -->
         <div class="section-center">
             <h2>Especiales de temporada</h2>
         </div>
-
         <div class="menu-grid" id="especiales"></div>
 
         <!-- BOTÓN MENÚ DE JUEGOS -->
@@ -327,27 +339,31 @@
 
 <script>
     const menuData = {
-        completo: [
-            { nombre: "Jugo", precio: "5" },
-            { nombre: "Agua (c/s hielo)", precio: "3" },
-            { nombre: "Refresco", precio: "3.50" },
-            { nombre: "Latte", precio: "7" },
-            { nombre: "Té helado", precio: "6" },
-            { nombre: "Chocolate", precio: "7" },
+        bebidasCalientes: [
             { nombre: "Café", precio: "5" },
+            { nombre: "Latte", precio: "7" },
+            { nombre: "Chocolate", precio: "7" },
             { nombre: "Mate", precio: "4" },
-            { nombre: "Té", precio: "4" },
-            { nombre: "Cereal", precio: "6" },
-            { nombre: "Pipocas", precio: "3" },
-            { nombre: "Ramen", precio: "13" },
+            { nombre: "Té", precio: "4" }
+        ],
+        bebidasFrias: [
+            { nombre: "Jugo", precio: "5" },
+            { nombre: "Refresco", precio: "3.5" },
+            { nombre: "Agua (c/s hielo)", precio: "3" },
+            { nombre: "Té helado", precio: "6" },
             { nombre: "Azul Protecito", precio: "9" },
             { nombre: "Violeta Protecito", precio: "9" },
             { nombre: "Esmeralda Protecito", precio: "9" },
             { nombre: "Brisa de Coco", precio: "9" }
         ],
+        snacks: [
+            { nombre: "Cereal", precio: "6" },
+            { nombre: "Pipocas", precio: "3" },
+            { nombre: "Ramen", precio: "13" }
+        ],
         especiales: [
             { nombre: "Amanecer Dorado 2.0", precio: "10" },
-            { nombre: "Soda Virgen", precio: "6.50 (vaso) - 10 (copa)" }
+            { nombre: "Soda Virgen", precio: "6.5 (vaso)/10 (copa)" }
         ]
     };
 
@@ -357,7 +373,6 @@
             const div = document.createElement('div');
             div.className = 'menu-item';
             
-            // Volvemos a la estructura original, mucho más limpia
             div.innerHTML = `
                 <span class="item-name">${item.nombre}</span>
                 <span class="item-dots"></span>
@@ -367,8 +382,25 @@
         });
     }
 
-    renderMenu('menu-completo', menuData.completo);
+    renderMenu('bebidas-calientes', menuData.bebidasCalientes);
+    renderMenu('bebidas-frias', menuData.bebidasFrias);
+    renderMenu('snacks', menuData.snacks);
     renderMenu('especiales', menuData.especiales);
+
+    // Funcionalidad del botón de volver arriba
+    const btnTop = document.getElementById("btnTop");
+    window.addEventListener("scroll", function() {
+        if (window.scrollY > 300) {
+            btnTop.style.display = "flex";
+        } else {
+            btnTop.style.display = "none";
+        }
+    });
+
+    btnTop.addEventListener("click", function(e) {
+        e.preventDefault(); 
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 </script>
 </body>
 </html>
