@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chewy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f6ebd8; 
-            --text-dark: #3e1f13; 
-            --highlight: #a96f4c; 
-            --accent-peach: #ffa89c; 
-            --price-color: #5c3826; 
+            --bg-color: #ffd6e8;
+            --text-dark: #3a2224;
+            --highlight: #f596c5;
+            --price-color: #5c3538;
         }
         
         body {
@@ -24,10 +23,11 @@
             display: flex;
             justify-content: center;
             background-image: 
-                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%),
-                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%);
+                radial-gradient(#f596c5 15%, transparent 16%),
+                radial-gradient(#f596c5 15%, transparent 16%);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
+            scroll-behavior: smooth;
         }
 
         .menu-container {
@@ -36,15 +36,15 @@
             width: 100%;
             border-radius: 20px;
             padding: 15px;
-            box-shadow: 0 15px 40px rgba(62, 31, 19, 0.15), inset 0 0 20px rgba(255,255,255,0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.5);
             position: relative;
         }
 
         .menu-inner-border {
-            border: 3px dashed var(--highlight);
+            border: 3px dashed #f18bbd;
             border-radius: 15px;
             padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.4); 
+            background: rgba(255, 255, 255, 0.35); 
             position: relative;
             z-index: 3;
         }
@@ -66,7 +66,7 @@
             margin-top: 5px;
             margin-bottom: 30px;
             font-weight: 800;
-            color: #5c3826;
+            color: #6a4245;
             letter-spacing: 1px;
         }
 
@@ -92,7 +92,7 @@
             background-color: var(--highlight);
             z-index: -1;
             border-radius: 8px;
-            opacity: 0.7;
+            opacity: 0.9;
             transform: rotate(-1.5deg);
         }
 
@@ -135,14 +135,14 @@
 
         .item-name::before {
             content: "•";
-            color: var(--highlight); 
+            color: #d85c96; 
             margin-right: 6px;
             font-size: 1.5rem;
         }
 
         .item-dots {
             flex-grow: 1;
-            border-bottom: 3px dotted #d4a383; 
+            border-bottom: 3px dotted #e3a2c2; 
             margin: 0 8px;
             position: relative;
             top: -6px; 
@@ -170,38 +170,67 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background-color: #8b5133;
+            background-color: #d85c96;
             color: white;
             text-decoration: none;
             font-family: 'Chewy', cursive;
             font-size: 1.8rem;
             padding: 12px 30px;
             border-radius: 30px;
-            box-shadow: 0 6px 0 #5c3826, 0 10px 15px rgba(62, 31, 19, 0.2);
+            box-shadow: 0 6px 0 #b33973, 0 10px 15px rgba(0,0,0,0.2);
             transition: all 0.1s ease;
             position: relative;
             z-index: 5;
         }
 
         .btn-juegos:hover {
-            background-color: var(--highlight);
+            background-color: #e56ca5;
             transform: translateY(2px);
-            box-shadow: 0 4px 0 #5c3826, 0 8px 10px rgba(62, 31, 19, 0.2);
+            box-shadow: 0 4px 0 #b33973, 0 8px 10px rgba(0,0,0,0.2);
         }
 
         .btn-juegos:active {
             transform: translateY(6px);
-            box-shadow: 0 0 0 #5c3826, 0 2px 5px rgba(62, 31, 19, 0.2);
+            box-shadow: 0 0 0 #b33973, 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .btn-icon {
             font-size: 2rem;
         }
 
+        /* BOTÓN VOLVER ARRIBA RE-AGREGADO AL CSS */
+        .btn-top {
+            display: none; 
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 99;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            border: none;
+            outline: none;
+            background-color: #d85c96;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: background-color 0.3s, transform 0.2s;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn-top:hover {
+            background-color: #e56ca5;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+
         .social-footer {
             margin-top: 40px;
             text-align: center;
-            border-top: 2px dashed var(--highlight);
+            border-top: 2px dashed #f18bbd;
             padding-top: 25px;
         }
 
@@ -223,13 +252,13 @@
         .social-icon {
             text-decoration: none;
             background-color: var(--highlight);
-            color: #fff;
+            color: var(--text-dark);
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: 800;
             font-size: 1.05rem;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(169, 111, 76, 0.4);
+            box-shadow: 0 4px 10px rgba(245, 150, 197, 0.4);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -238,25 +267,26 @@
         }
 
         .social-icon:hover {
-            background-color: #8b5133;
+            background-color: #f18bbd;
+            color: #fff;
             transform: translateY(-4px);
-            box-shadow: 0 6px 15px rgba(169, 111, 76, 0.6);
+            box-shadow: 0 6px 15px rgba(245, 150, 197, 0.6);
         }
 
         .axolotl-img { 
             position: absolute; 
             z-index: 10; 
             pointer-events: none;
-            filter: drop-shadow(0px 10px 10px rgba(62, 31, 19, 0.15));
+            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.15));
         }
 
         .axolotl-1 { top: -45px; left: -40px; width: 170px; } 
         .axolotl-2 { top: 20px; right: -25px; width: 200px; transform: rotate(15deg); } 
         .axolotl-3 { bottom: 40px; left: -35px; width: 120px; transform: rotate(-10deg); } 
 
-        .color-blob { position: absolute; background-color: var(--accent-peach); border-radius: 50%; z-index: 1; }
-        .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.7; }
-        .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.7; }
+        .pink-blob { position: absolute; background-color: var(--highlight); border-radius: 50%; z-index: 1; }
+        .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.8; }
+        .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.8; }
 
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
@@ -272,13 +302,15 @@
             .axolotl-1 { width: 130px; left: -20px; top: -30px; }
             .axolotl-2 { width: 120px; right: -15px; top: 10px; }
             .axolotl-3 { width: 90px; left: -20px; bottom: 80px; }
+            
+            .btn-top { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 1.2rem; }
         }
 
     </style>
 </head>
 <body>
 
-<a href="#" id="btnTop" class="btn-top" title="Volver arriba" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 99; width: 50px; height: 50px; font-size: 1.5rem; border: none; outline: none; background-color: #8b5133; color: white; cursor: pointer; border-radius: 50%; box-shadow: 0 4px 10px rgba(62, 31, 19, 0.3); transition: background-color 0.3s, transform 0.2s; align-items: center; justify-content: center; text-decoration: none;">
+<a href="#" id="btnTop" class="btn-top" title="Volver arriba">
     ⇮
 </a>
 
@@ -288,8 +320,8 @@
     <img src="ajolote_2.png" class="axolotl-img axolotl-2" alt=" ">
     <img src="ajolote_3.png" class="axolotl-img axolotl-3" alt=" ">
 
-    <div class="color-blob blob-1"></div>
-    <div class="color-blob blob-2"></div>
+    <div class="pink-blob blob-1"></div>
+    <div class="pink-blob blob-2"></div>
     
     <div class="menu-inner-border">
         <h1>PROTECITO<br>ANTICAFE</h1>
@@ -348,7 +380,7 @@
         bebidasFrias: [
             { nombre: "Protecito Latte", precio: "7" },
             { nombre: "Jugo", precio: "5" },
-            { nombre: "Refresco", precio: "3.5" },
+            { nombre: "Soda", precio: "3.5" },
             { nombre: "Agua (c/s hielo)", precio: "3" },
             { nombre: "Té helado", precio: "6" },
             { nombre: "Azul Protecito", precio: "9" },
