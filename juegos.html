@@ -8,12 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chewy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* NUEVA PALETA DE COLORES INSPIRADA EN EL LOGO */
-            --bg-color: #f6ebd8; /* Crema/Beige claro del cuerpo */
-            --text-dark: #3e1f13; /* Marrón chocolate oscuro de las letras */
-            --highlight: #a96f4c; /* Marrón cálido de las branquias */
-            --accent-peach: #ffa89c; /* Durazno del rubor de las mejillas */
-            --card-bg: rgba(255, 255, 255, 0.75);
+            --bg-color: #ffd6e8;
+            --text-dark: #3a2224;
+            --highlight: #f596c5;
+            --price-color: #5c3538;
+            --card-bg: rgba(255, 255, 255, 0.7);
         }
         
         body {
@@ -26,8 +25,8 @@
             justify-content: center;
             /* Puntos de fondo en un marrón muy suave */
             background-image: 
-                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%),
-                radial-gradient(rgba(169, 111, 76, 0.25) 15%, transparent 16%);
+                radial-gradient(#f596c5 15%, transparent 16%),
+                radial-gradient(#f596c5 15%, transparent 16%);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
             scroll-behavior: smooth; 
@@ -39,7 +38,7 @@
             width: 100%;
             border-radius: 20px;
             padding: 15px;
-            box-shadow: 0 15px 40px rgba(62, 31, 19, 0.15), inset 0 0 20px rgba(255,255,255,0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.6);
             position: relative;
         }
 
@@ -113,7 +112,7 @@
             font-size: 1.1rem;
             font-family: 'Nunito', sans-serif;
             font-weight: 700;
-            border: 3px solid #d4a383;
+            border: 3px solid var(--highlight);
             border-radius: 25px;
             outline: none;
             background-color: rgba(255, 255, 255, 0.9);
@@ -123,8 +122,8 @@
         }
 
         .search-bar:focus {
-            border-color: #8b5133;
-            box-shadow: 0 0 10px rgba(139, 81, 51, 0.3);
+            border-color: #d85c96;
+            box-shadow: 0 0 10px rgba(216, 92, 150, 0.3);
             transform: scale(1.02);
         }
 
@@ -144,7 +143,7 @@
             background-color: var(--card-bg);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(62, 31, 19, 0.08);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
@@ -153,13 +152,13 @@
 
         .game-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(62, 31, 19, 0.15);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .game-img-box {
             width: 100%;
             aspect-ratio: 1 / 1;
-            background-color: #f2ddc9;
+            background-color: #fce4ec;
             position: relative;
             display: flex;
             align-items: center;
@@ -227,70 +226,61 @@
             font-size: 1.5rem;
             border: none;
             outline: none;
-            background-color: #8b5133;
+            background-color: #d85c96;
             color: white;
             cursor: pointer;
             border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(62, 31, 19, 0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: background-color 0.3s, transform 0.2s;
-            display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
         }
 
         .btn-top:hover {
-            background-color: #683921;
+            background-color: #e56ca5;
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 15px rgba(62, 31, 19, 0.4);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
         }
 
-        /* BOTÓN VOLVER */
+        /* BOTÓN VOLVER AL MENÚ PRINCIPAL */
         .btn-volver-container {
             text-align: center;
-            margin: 30px 0 10px 0;
+            margin-bottom: 25px;
         }
-
-        .btn-volver {
+        
+        .btn-volver-menu {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
             background-color: #fff;
-            color: #8b5133;
+            color: #d85c96;
             text-decoration: none;
             font-family: 'Nunito', sans-serif;
             font-weight: 800;
-            font-size: 1.2rem;
-            padding: 10px 25px;
+            font-size: 1.1rem;
+            padding: 8px 25px;
             border-radius: 25px;
-            border: 3px solid #8b5133;
-            box-shadow: 0 4px 0 #8b5133;
+            border: 3px solid #d85c96;
+            box-shadow: 0 4px 0 #d85c96;
             transition: all 0.1s ease;
-            position: relative;
-            z-index: 5;
         }
 
-        .btn-volver:hover {
-            background-color: #f6ebd8;
+        .btn-volver-menu:hover {
+            background-color: #fce4ec;
             transform: translateY(2px);
-            box-shadow: 0 2px 0 #8b5133;
+            box-shadow: 0 2px 0 #d85c96;
         }
 
-        .btn-volver:active {
+        .btn-volver-menu:active {
             transform: translateY(4px);
-            box-shadow: 0 0 0 #8b5133;
+            box-shadow: 0 0 0 #d85c96;
         }
 
         /* Imágenes decorativas */
-        .axolotl-img { position: absolute; z-index: 10; pointer-events: none; filter: drop-shadow(0px 10px 10px rgba(62, 31, 19, 0.15)); }
+        .axolotl-img { position: absolute; z-index: 10; pointer-events: none; filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.15)); }
         .axolotl-1 { top: -45px; left: -40px; width: 170px; } 
         .axolotl-2 { top: 20px; right: -25px; width: 150px; transform: rotate(15deg) scaleX(-1); }
-
-        /* Manchas de color durazno basadas en las mejillas del ajolote */
-        .color-blob { position: absolute; background-color: var(--accent-peach); border-radius: 50%; z-index: 1; }
-        .blob-1 { top: -20px; left: -30px; width: 180px; height: 160px; opacity: 0.7; }
-        .blob-2 { bottom: -30px; right: -40px; width: 220px; height: 220px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.7; }
 
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
@@ -322,17 +312,14 @@
     <img src="ajolote_1.png" class="axolotl-img axolotl-1" alt=" ">
     <img src="ajolote_2.png" class="axolotl-img axolotl-2" alt=" ">
 
-    <!-- Manchas decorativas actualizadas al tono durazno -->
-    <div class="color-blob blob-1"></div>
-    <div class="color-blob blob-2"></div>
-    
     <div class="menu-inner-border">
         <h1>LUDOTECA</h1>
         <div class="subtitle">Diviértete mientras disfrutas</div>
 
+        <!-- BOTÓN VOLVER AL MENÚ PRINCIPAL -->
         <div class="btn-volver-container">
-            <a href="index.html" class="btn-volver">
-                ☕ Volver al Menú
+            <a href="index.html" class="btn-volver-menu">
+                ☕ Volver al Menú Principal
             </a>
         </div>
 
@@ -361,10 +348,22 @@
         { nombre: "Paceñopolis", imagen: "paceño.png", jugadores: "2-6", tiempo: "90 min" },
         { nombre: "Ludo", imagen: "ludo.png", jugadores: "2-4", tiempo: "30-60 min" },
         { nombre: "Dominó", imagen: "domino.png", jugadores: "2-4", tiempo: "15-30 min" },
+        { nombre: "Fantasma Blitz", imagen: "fantasma.png", jugadores: "2-8", tiempo: "20-30 min" },
+        { nombre: "Magnetic Effect Chess", imagen: "imanes.png", jugadores: "1-4", tiempo: "10-20 min" },
+        { nombre: "Cube Face Change", imagen: "cube.png", jugadores: "1-4", tiempo: "10-20 min" },
+        { nombre: "Alphabet Spelling Word", imagen: "alfa.png", jugadores: "1-4", tiempo: "10-20 min" },
+        { nombre: "Operando", imagen: "operando.png", jugadores: "1-2", tiempo: "10-15 min" },
+        { nombre: "Conecta 4", imagen: "conecta.png", jugadores: "2", tiempo: "10-15 min" },
+        { nombre: "Rope Untie Challenge", imagen: "rope.png", jugadores: "1+", tiempo: "10-20 min" },
+        { nombre: "Ocean Patterns Memory Flip Chess", imagen: "memoria.png", jugadores: "2", tiempo: "10-15 min" },
+        { nombre: "Laberinto", imagen: "laberinto.png", jugadores: "1", tiempo: "5-15 min" },
+        { nombre: "Poker set", imagen: "laberinto.png", jugadores: "2-10", tiempo: "30-120 min" },
+        { nombre: "Dobble", imagen: "laberinto.png", jugadores: "2-8", tiempo: "15 min" },
+        { nombre: "Serpientes y escaleras", imagen: "serpiente.png", jugadores: "2-4", tiempo: "15-30 min" },
         { nombre: "Mente Vacuna", imagen: "mentevac.png", jugadores: "4-20", tiempo: "20-30 min" },
         { nombre: "Preguntados", imagen: "pregunta.png", jugadores: "2-4", tiempo: "30-60 min" },
         { nombre: "Catan", imagen: "catan.png", jugadores: "3-4", tiempo: "60 min" },
-        { nombre: "Cartas de Póker", imagen: "cartas.png", jugadores: "2-5+", tiempo: "Variable" },
+        { nombre: "Cartas", imagen: "cartas.png", jugadores: "2-5+", tiempo: "Variable" },
         { nombre: "Ajedrez", imagen: "chess.png", jugadores: "2", tiempo: "30+ min" },
         { nombre: "Basta", imagen: "basta.png", jugadores: "2+", tiempo: "15-30 min" },
         { nombre: "Basta 3.0", imagen: "basta3.0.png", jugadores: "2-8", tiempo: "15-30 min" },
@@ -380,6 +379,7 @@
         { nombre: "Taco Gato Cabra Queso Pizza", imagen: "taco.png", jugadores: "2-8", tiempo: "10 min" },
         { nombre: "Who Am I?", imagen: "who.png", jugadores: "2+", tiempo: "15 min" },
         { nombre: "Penguin Trap", imagen: "penguin.png", jugadores: "2-4", tiempo: "5-10 min" },
+        { nombre: "Frog Trap", imagen: "frog.png", jugadores: "2-4", tiempo: "5-10 min" },
         { nombre: "60 Segundos", imagen: "60s.png", jugadores: "2+", tiempo: "30 min" },
         { nombre: "Ojos de halcon", imagen: "halcon.png", jugadores: "2-6", tiempo: "15 min" },
         { nombre: "CASHFLOW", imagen: "cashflow.png", jugadores: "2-6", tiempo: "60-180 min" },
@@ -400,6 +400,8 @@
         { nombre: "Rompecabezas Naruto (200pcs)", imagen: "naruto.png", jugadores: "2+", tiempo: "15+ min" },
         { nombre: "Rompecabezas Demon Slayer (200pcs)", imagen: "demon.png", jugadores: "2+", tiempo: "15+ min" },
         { nombre: "Rompecabezas Record of Ragnarok (200pcs)", imagen: "record.png", jugadores: "2+", tiempo: "15+ min" },
+        { nombre: "Rompecabezas Dragon Ball (1000pcs)", imagen: "dragon.png", jugadores: "2+", tiempo: "15+ min" },
+        { nombre: "Rompecabezas One Piece (1000pcs)", imagen: "piece.png", jugadores: "2+", tiempo: "15+ min" },
         { nombre: "Rompecabezas Animales (100pcs)", imagen: "animales.png", jugadores: "2+", tiempo: "15+ min" }
     ];
 
@@ -416,7 +418,6 @@
             const card = document.createElement('div');
             card.className = 'game-card';
             
-            // NUEVO: Envolvemos el contenido en una etiqueta <a> que redirige a detalle.html
             card.innerHTML = `
                 <a href="detalle.html?juego=${encodeURIComponent(game.nombre)}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
                     <div class="game-img-box">
