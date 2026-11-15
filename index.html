@@ -160,6 +160,98 @@
             font-weight: 900;
         }
 
+        /* MENÚ DESPLEGABLE DE HELADOS */
+        .helados-dropdown {
+            margin: 10px 0 30px 0;
+            background-color: rgba(255, 255, 255, 0.65);
+            border: 2.5px dashed #f18bbd;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .helados-dropdown summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(255, 255, 255, 0.85);
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .helados-dropdown summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .helados-dropdown summary:hover {
+            background-color: #fff;
+        }
+
+        .helados-dropdown[open] summary {
+            border-bottom: 2px dashed #f18bbd;
+        }
+
+        .helados-title {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            position: relative;
+            z-index: 1;
+            padding: 0 10px;
+        }
+
+        .helados-title::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+            height: 14px;
+            background-color: var(--highlight);
+            z-index: -1;
+            border-radius: 8px;
+            opacity: 0.9;
+            transform: rotate(-1.5deg);
+        }
+
+        .helados-toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--highlight);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            box-shadow: 0 3px 8px rgba(245, 150, 197, 0.45);
+        }
+
+        .helados-arrow {
+            display: inline-block;
+            font-size: 0.8rem;
+            transition: transform 0.25s ease;
+        }
+
+        .helados-dropdown[open] .helados-arrow {
+            transform: rotate(180deg);
+        }
+
+        .helados-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            padding: 18px 20px;
+            margin-bottom: 0;
+        }
+
+        .helados-grid .item-name {
+            white-space: normal;
+        }
+
         .btn-juegos-container {
             text-align: center;
             margin: 40px 0 20px 0;
@@ -198,7 +290,7 @@
             font-size: 2rem;
         }
 
-        /* BOTÓN VOLVER ARRIBA RE-AGREGADO AL CSS */
+        /* BOTÓN VOLVER ARRIBA */
         .btn-top {
             display: none; 
             position: fixed;
@@ -295,6 +387,9 @@
             .menu-item { font-size: 1rem; }
             .menu-inner-border { padding: 20px 10px; }
             .item-dots { margin: 0 4px; }
+            .helados-title { font-size: 2.1rem; }
+            .helados-dropdown summary { padding: 10px 14px; }
+            .helados-grid { padding: 14px 12px; }
             .social-icon { padding: 8px 15px; font-size: 0.9rem; }
             .social-footer p { font-size: 1.8rem; }
             .btn-juegos { font-size: 1.5rem; padding: 10px 25px; }
@@ -345,6 +440,15 @@
         </div>
         <div class="menu-grid" id="snacks"></div>
 
+        <!-- Helados (Desplegable) -->
+        <details class="helados-dropdown">
+            <summary>
+                <span class="helados-title">🍦 Helados</span>
+                <span class="helados-toggle-pill">Ver lista <span class="helados-arrow">▼</span></span>
+            </summary>
+            <div class="menu-grid helados-grid" id="helados"></div>
+        </details>
+
         <!-- Especiales -->
         <div class="section-center">
             <h2>Especiales de temporada</h2>
@@ -389,14 +493,27 @@
             { nombre: "Brisa de Coco", precio: "9" }
         ],
         snacks: [
-            { nombre: "Pipocas", precio: "3" },
-            { nombre: "Papas (c/s picante)", precio: "4" },
+            { nombre: "Pipocas c/mantequilla", precio: "3" },
+            { nombre: "Pipocas c/chocolate", precio: "4" },
             { nombre: "Cereal", precio: "6" },
-            { nombre: "Ramen", precio: "13" }
+            { nombre: "Fideos instantáneos", precio: "13" }
+        ],
+        helados: [
+            { nombre: "Tentación", precio: "8.50" },
+            { nombre: "Tentación Cono", precio: "8.50" },
+            { nombre: "Cono", precio: "8.50" },
+            { nombre: "Griego (Cono Yogurt Pie de Limón)", precio: "8.50" },
+            { nombre: "Megacono (Pasas al Ron)", precio: "6.50" },
+            { nombre: "Ricoco Cono", precio: "5" },
+            { nombre: "Rocky", precio: "4" },
+            { nombre: "Negrito", precio: "3.50" },
+            { nombre: "Deli Pop", precio: "3" },
+            { nombre: "Alfredo Canela", precio: "1.50" },
+            { nombre: "Delizaurio", precio: "1.50" },
+            { nombre: "Bolo Frutas", precio: "1" }
         ],
         especiales: [
-            { nombre: "Amanecer Dorado 2.0", precio: "10" },
-            { nombre: "Soda Virgen", precio: "6.5 (vaso)/10 (copa)" }
+            { nombre: "Amanecer Dorado 2.0", precio: "10" }
         ]
     };
 
@@ -418,6 +535,7 @@
     renderMenu('bebidas-calientes', menuData.bebidasCalientes);
     renderMenu('bebidas-frias', menuData.bebidasFrias);
     renderMenu('snacks', menuData.snacks);
+    renderMenu('helados', menuData.helados);
     renderMenu('especiales', menuData.especiales);
 
     // Funcionalidad del botón de volver arriba
