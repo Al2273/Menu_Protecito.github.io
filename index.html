@@ -120,11 +120,31 @@
             align-items: baseline; 
             font-size: 1.15rem;
             font-weight: 800;
-            transition: transform 0.2s; 
+            transition: transform 0.2s, background-color 0.2s;
+            padding: 4px 6px;
+            border-radius: 10px;
         }
 
         .menu-item:hover {
             transform: scale(1.02) translateX(3px);
+        }
+
+        .menu-item.clickable {
+            cursor: pointer;
+        }
+
+        .menu-item.clickable:hover {
+            background-color: rgba(255, 255, 255, 0.65);
+        }
+
+        .menu-item.clickable:active {
+            transform: scale(0.98);
+        }
+
+        .photo-hint {
+            font-size: 0.85rem;
+            margin-left: 6px;
+            opacity: 0.85;
         }
 
         .item-name {
@@ -250,6 +270,126 @@
 
         .helados-grid .item-name {
             white-space: normal;
+        }
+
+        /* MODAL DE IMAGEN DEL PRODUCTO (SIN RECORTES) */
+        .product-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(58, 34, 36, 0.65);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-modal-overlay.active {
+            display: flex;
+        }
+
+        .product-modal-card {
+            background-color: var(--bg-color);
+            max-width: 460px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            animation: modalPop 0.22s ease-out;
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.88); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .product-modal-inner {
+            border: 3px dashed #f18bbd;
+            border-radius: 14px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background-color: #d85c96;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .modal-close-btn:hover {
+            background-color: #e56ca5;
+            transform: scale(1.08);
+        }
+
+        .modal-product-img {
+            width: auto;
+            max-width: 100%;
+            max-height: 55vh;
+            object-fit: contain;
+            display: block;
+            margin: 10px auto 0 auto;
+            border-radius: 14px;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            background-color: #fce4ec;
+        }
+
+        .modal-img-fallback {
+            width: 100%;
+            height: 200px;
+            border-radius: 14px;
+            border: 4px solid #fff;
+            background-color: #fce4ec;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-top: 10px;
+            color: #6a4245;
+        }
+
+        .modal-img-fallback span {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .modal-product-title {
+            font-family: 'Chewy', cursive;
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin: 15px 0 8px 0;
+            line-height: 1.1;
+            text-shadow: 1px 1px 0 #fff;
+        }
+
+        .modal-product-price {
+            display: inline-block;
+            background-color: var(--highlight);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.15rem;
+            padding: 5px 18px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(245, 150, 197, 0.45);
         }
 
         .btn-juegos-container {
@@ -473,61 +613,119 @@
     </div>
 </div>
 
+<!-- VENTANA EMERGENTE PARA VER FOTO DEL PRODUCTO -->
+<div id="productModal" class="product-modal-overlay" aria-hidden="true">
+    <div class="product-modal-card">
+        <div class="product-modal-inner">
+            <button type="button" id="closeModalBtn" class="modal-close-btn" title="Cerrar">✕</button>
+            <div id="modalImgContainer"></div>
+            <h3 id="modalTitle" class="modal-product-title"></h3>
+            <div id="modalPrice" class="modal-product-price"></div>
+        </div>
+    </div>
+</div>
+
 <script>
     const menuData = {
         bebidasCalientes: [
-            { nombre: "Café", precio: "5" },
-            { nombre: "Chocolate", precio: "7" },
-            { nombre: "Mate", precio: "4" },
-            { nombre: "Té", precio: "4" }
+            { nombre: "Café", precio: "5", imagen: "" },
+            { nombre: "Chocolate", precio: "7", imagen: "" },
+            { nombre: "Mate", precio: "4", imagen: "" },
+            { nombre: "Té", precio: "4", imagen: "" }
         ],
         bebidasFrias: [
-            { nombre: "Protecito Latte", precio: "7" },
-            { nombre: "Jugo", precio: "5" },
-            { nombre: "Soda", precio: "3.5" },
-            { nombre: "Agua (c/s hielo)", precio: "3" },
-            { nombre: "Té helado", precio: "6" },
-            { nombre: "Azul Protecito", precio: "9" },
-            { nombre: "Violeta Protecito", precio: "9" },
-            { nombre: "Esmeralda Protecito", precio: "9" },
-            { nombre: "Brisa de Coco", precio: "9" }
+            { nombre: "Protecito Latte", precio: "7", imagen: "" },
+            { nombre: "Jugo", precio: "5", imagen: "" },
+            { nombre: "Soda", precio: "3.5", imagen: "" },
+            { nombre: "Agua (c/s hielo)", precio: "3", imagen: "" },
+            { nombre: "Té helado", precio: "6", imagen: "tehelado.png" },
+            { nombre: "Azul Protecito", precio: "9", imagen: "azul.png" },
+            { nombre: "Violeta Protecito", precio: "9", imagen: "violeta.png" },
+            { nombre: "Esmeralda Protecito", precio: "9", imagen: "verde.png" },
+            { nombre: "Brisa de Coco", precio: "9", imagen: "coco.png" }
         ],
         snacks: [
-            { nombre: "Pipocas c/mantequilla", precio: "3" },
-            { nombre: "Pipocas c/chocolate", precio: "4" },
-            { nombre: "Cereal", precio: "6" },
-            { nombre: "Fideos instantáneos", precio: "13" }
+            { nombre: "Pipocas c/mantequilla", precio: "3", imagen: "" },
+            { nombre: "Pipocas c/chocolate", precio: "4", imagen: "" },
+            { nombre: "Cereal", precio: "6", imagen: "" },
+            { nombre: "Fideos instantáneos", precio: "13", imagen: "" }
         ],
         helados: [
-            { nombre: "Tentación", precio: "8.50" },
-            { nombre: "Tentación Cono", precio: "8.50" },
-            { nombre: "Cono", precio: "8.50" },
-            { nombre: "Griego (Cono Yogurt Pie de Limón)", precio: "8.50" },
-            { nombre: "Megacono (Pasas al Ron)", precio: "6.50" },
-            { nombre: "Ricoco Cono", precio: "5" },
-            { nombre: "Rocky", precio: "4" },
-            { nombre: "Negrito", precio: "3.50" },
-            { nombre: "Deli Pop", precio: "3" },
-            { nombre: "Alfredo Canela", precio: "1.50" },
-            { nombre: "Delizaurio", precio: "1.50" },
-            { nombre: "Bolo Frutas", precio: "1" }
+            { nombre: "Tentación", precio: "8.50", imagen: "" },
+            { nombre: "Tentación Cono", precio: "8.50", imagen: "" },
+            { nombre: "Cono", precio: "8.50", imagen: "" },
+            { nombre: "Griego (Cono Yogurt Pie de Limón)", precio: "8.50", imagen: "" },
+            { nombre: "Megacono (Pasas al Ron)", precio: "6.50", imagen: "" },
+            { nombre: "Ricoco Cono", precio: "5", imagen: "" },
+            { nombre: "Rocky", precio: "4", imagen: "" },
+            { nombre: "Negrito", precio: "3.50", imagen: "" },
+            { nombre: "Deli Pop", precio: "3", imagen: "" },
+            { nombre: "Alfredo Canela", precio: "1.50", imagen: "" },
+            { nombre: "Delizaurio", precio: "1.50", imagen: "" },
+            { nombre: "Bolo Frutas", precio: "1", imagen: "" }
         ],
         especiales: [
-            { nombre: "Amanecer Dorado 2.0", precio: "10" }
+            { nombre: "Amanecer Dorado 2.0", precio: "10", imagen: "amanecer.png" }
         ]
     };
+
+    const productModal = document.getElementById('productModal');
+    const modalImgContainer = document.getElementById('modalImgContainer');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function abrirProducto(item) {
+        modalTitle.textContent = item.nombre;
+        modalPrice.textContent = `${item.precio} Bs`;
+        modalImgContainer.innerHTML = `
+            <img src="${item.imagen}" alt="${item.nombre}" class="modal-product-img"
+                 onerror="this.outerHTML='<div class=\\'modal-img-fallback\\'>📷<span>Foto no disponible</span></div>'">
+        `;
+        productModal.classList.add('active');
+        productModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function cerrarProducto() {
+        productModal.classList.remove('active');
+        productModal.setAttribute('aria-hidden', 'true');
+    }
+
+    closeModalBtn.addEventListener('click', cerrarProducto);
+    productModal.addEventListener('click', function(e) {
+        if (e.target === productModal) cerrarProducto();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && productModal.classList.contains('active')) {
+            cerrarProducto();
+        }
+    });
 
     function renderMenu(seccionId, items) {
         const container = document.getElementById(seccionId);
         items.forEach(item => {
             const div = document.createElement('div');
-            div.className = 'menu-item';
+            const tieneFoto = item.imagen && item.imagen.trim() !== "";
+            div.className = tieneFoto ? 'menu-item clickable' : 'menu-item';
             
             div.innerHTML = `
-                <span class="item-name">${item.nombre}</span>
+                <span class="item-name">${item.nombre}${tieneFoto ? '<span class="photo-hint" title="Ver foto">📷</span>' : ''}</span>
                 <span class="item-dots"></span>
                 <span class="item-price">${item.precio} <span class="price-currency">Bs</span></span>
             `;
+
+            if (tieneFoto) {
+                div.setAttribute('role', 'button');
+                div.setAttribute('tabindex', '0');
+                div.addEventListener('click', () => abrirProducto(item));
+                div.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        abrirProducto(item);
+                    }
+                });
+            }
+
             container.appendChild(div);
         });
     }
